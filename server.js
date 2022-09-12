@@ -1,14 +1,21 @@
 const express = require('express');
 const app = express();
-const services = require('./app/services/render')
+const services = require('./app/services/render');
+const mongoose = require('mongoose');
+require('dotenv').config();
+const adherentRoutes = require('./app/routes/adherent.route')
+
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ROUTE Main
 app.get('/', (req, res) => {
     res.json({message: 'Hello world'})
 })
 
+// ROUTES API
+app.use('/api/adherents', adherentRoutes)
 
 // ROUTES Adherents
 app.get('/adherents', services.getAdherents)
@@ -36,6 +43,17 @@ app.get('/add-sondage', services.addSondage)
 app.get('/edit-sondage', services.editSondage)
 
 const PORT = process.env.PORT || 3000;
-app.listen(3000, () => {
+
+// DATABASE CONNECTION
+mongoose.connect(process.env.MONGO_URI,
+    { useNewUrlParser: true })
+    .then(() => {
+        console.log('connected to database');
+    }).catch(error => {
+        console.log(`an error happened : ${error}`);
+    })
+    
+// START SERVER    
+app.listen(PORT, () => {
     console.log(`Server running at : http://localhost:${PORT}`);
 })
