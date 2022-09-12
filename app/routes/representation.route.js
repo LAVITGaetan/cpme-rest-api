@@ -1,29 +1,29 @@
 const express = require('express')
 const router = express.Router();
-const Adherent = require('../models/adherent.model');
+const representation = require('../models/representation.model');
 
-// Retrieve all adhérents
+// Retrieve all representations
 router.get('/', (req, res) => {
     res.send({ message: 'Api working' })
 })
 
-// Retrieve one adhérent
+// Retrieve one representation
 router.get('/:id', (req, res) => {
     res.send({ message: req.params.id })
 })
 
-// Add adhérent
+// Add representation
 router.post('/', (req, res) => {
-    const adherent = req.body;
-    res.json(adherent)
+    const representation = req.body;
+    res.json(representation)
 })
 
-// Update adhérent
+// Update representation
 router.patch('/:id', (req, res) => {
     res.send({ message: req.params.id })
 })
 
-//  Delete adhérent
+//  Delete representation
 router.delete('/:id', (req, res) => {
     res.send({ message : req.params.id})
 })

@@ -1,4 +1,14 @@
-//ADHERENTS
+// Login
+exports.login  = (req, res) => {
+    res.json({message: 'Page de connexion'})
+}
+
+exports.index = (req, res) => {
+    res.json({message: 'Page d\'accueil'})
+}
+
+
+// Adhérents
 exports.getAdherents = (req, res) => {
     res.send('Liste des adhérents')
 }
@@ -19,7 +29,7 @@ exports.editContact = (req, res) => {
     res.send('Modifier les informations de contact d\' un adhérent')
 }
 
-// MANDATS 
+// Mandats 
 exports.getMandats = (req, res) => {
     res.send('Liste des mandats')
 }
@@ -36,7 +46,7 @@ exports.editMandat = (req, res) => {
     res.send('Modifier un mandat')
 }
 
-// MANDATAIRES
+// Mandataires
 exports.getMandataires = (req, res) => {
     res.send('Liste des mandataires')
 }
@@ -53,7 +63,7 @@ exports.editMandataire = (req, res) => {
     res.send('Modifier un mandataire')
 }
 
-// SONDAGES
+// Sondages
 exports.getSondages = (req, res) => {
     res.send('Liste des sondages')
 }

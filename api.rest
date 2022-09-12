@@ -1,1 +1,40 @@
-GET http://localhost:3000/api/adherents
+GET http://localhost:5000/api/representations
+
+###
+GET http://localhost:5000/api/mandats
+
+### 
+POST http://localhost:5000/api/adherents
+Content-Type: application/json
+
+{
+    "entreprise": "entreprise",
+    "section": "section",
+    "adresse": "adresse",
+    "activite": "activite",
+    "nom": "nom",
+    "prenom": "prenom",
+    "email": "email",
+    "telephone": "telephone",
+    "identifiant": "12345",
+    "siteweb": "siteweb_url",
+    "logo": "logo_url",
+    "parution": "false",
+    "status": true,
+    "contact": {
+        "titre" : "titre",
+        "nom" : "nom",
+        "prenom" : "prenom",
+        "telephone" : "telephone",
+        "email" : "email",
+        "linkedin" : "linkedin"
+    },
+    "contactSecondaire": {
+        "titre" : "titre2",
+        "nom" : "nom2",
+        "prenom" : "prenom2",
+        "telephone" : "telephone2",
+        "email" : "email2",
+        "linkedin" : "Linkedin2"
+    }
+}

@@ -1,29 +1,29 @@
 const express = require('express')
 const router = express.Router();
-const Adherent = require('../models/adherent.model');
+const Mandat = require('../models/mandat.model');
 
-// Retrieve all adhérents
+// Retrieve all mandats
 router.get('/', (req, res) => {
     res.send({ message: 'Api working' })
 })
 
-// Retrieve one adhérent
+// Retrieve one mandat
 router.get('/:id', (req, res) => {
     res.send({ message: req.params.id })
 })
 
-// Add adhérent
+// Add mandat
 router.post('/', (req, res) => {
-    const adherent = req.body;
-    res.json(adherent)
+    const mandat = req.body;
+    res.json(mandat)
 })
 
-// Update adhérent
+// Update mandat
 router.patch('/:id', (req, res) => {
     res.send({ message: req.params.id })
 })
 
-//  Delete adhérent
+//  Delete mandat
 router.delete('/:id', (req, res) => {
     res.send({ message : req.params.id})
 })

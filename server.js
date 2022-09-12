@@ -4,18 +4,25 @@ const services = require('./app/services/render');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const adherentRoutes = require('./app/routes/adherent.route')
+const mandatRoutes = require('./app/routes/mandat.route')
+const mandataireRoutes = require('./app/routes/mandataire.route')
+const representationRoutes = require('./app/routes/representation.route')
 
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ROUTE Main
-app.get('/', (req, res) => {
-    res.json({message: 'Hello world'})
-})
-
 // ROUTES API
 app.use('/api/adherents', adherentRoutes)
+app.use('/api/mandats', mandatRoutes)
+app.use('/api/mandataires', mandataireRoutes)
+app.use('/api/representations', representationRoutes)
+
+// ROUTE Login
+app.get('/login', services.login)
+
+// ROUTE Index
+app.get('/', services.index)
 
 // ROUTES Adherents
 app.get('/adherents', services.getAdherents)
