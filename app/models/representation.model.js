@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// Portrait Schema
-const PortraitSchema = new mongoose.Schema({
+// Representation Schema
+const RepresentationSchema = new mongoose.Schema({
     titre: {
         type: String
     },
@@ -9,10 +9,10 @@ const PortraitSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    id_portrait: {
+    id_mandataire: {
         type: Number,
         required: true
     }
 });
 
-module.exports = new mongoose.model('Portrait', PortraitSchema);
+module.exports = new mongoose.model('Representation', RepresentationSchema);
