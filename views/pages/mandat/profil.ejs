@@ -1,0 +1,127 @@
+<%- include('../includes/header.ejs') %>
+    <%- include('../includes/navbar.ejs') %>
+        <div class="layout">
+            <div class="layout-content">
+                <div class="profil">
+                    <div class="profil-card">
+                        <div class="profil-card-figure">
+                            <% if (mandat.logo !=='' ) { %>
+                                <img class="profil-image" width="128px" height="128px"
+                                    src="upload/<%= mandat.logo %>" alt="" class="profil-logo">
+                                <% } else { %>
+                                    <img class="profil-image" width="48px" height="48px" src="img/add-photo.png" alt=""
+                                        class="profil-logo">
+                                    <% } %>
+                        </div>
+
+                        <h3 class="profil-card-title">
+                            <%= mandat.label %>
+                        </h3>
+                        <p class="profil-card-subtitle">
+                            <%= mandat.categorie %>
+                        </p>
+
+                        <!-- Supprimer un mandat -->
+                        <div onclick="deleteMandataire('<%= mandat._id %>')" class="profil-card-delete">
+                            <img src="img/delete.png" width="12px" height="12px" alt="Supprimer">
+                        </div>
+                    </div>
+                    <div class="profil-card">
+   
+                    </div>
+
+                    <div class="container">
+                        <div class="container-header">Informations générales</div>
+
+                        <div class="container-row"><span class="row-label">Nom :
+                            </span>
+                            <%= mandat.nom %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Mission : </span>
+                            <%= mandat.mission %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Composition :
+                            </span>
+                            <%= mandat.composition %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Renouvellement : </span>
+                            <%= mandat.renouvellement %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Duree :
+                            </span>
+                            <%= mandat.duree %>
+                        </div>
+
+                        <!-- Modifier un mandat -->
+
+                        <div class="container-action"><a href="/edit-mandat?id=<%= mandat._id %>"
+                                class="container-cta">Modifier</div></a>
+                    </div>
+
+                    <div class="container">
+                        <div class="container-header">Parution dans l' annuaire</div>
+                        <% if (mandat.contact) { %>
+
+                            <div class="container-row"><span class="row-label">Contact Principal :
+                                </span>
+                                <%= mandat.contact.titre %>
+                            </div>
+                            <div class="container-row"><span class="row-label">Identité :
+                                </span>
+                                <%= mandat.contact.prenom %>
+                                    <%= mandat.contact.nom %>
+                            </div>
+                            <div class="container-row"><span class="row-label">Email :
+                                    <%= mandat.contact.email %>
+                                </span>
+
+                            </div>
+                            <div class="container-row"><span class="row-label">Téléphone :
+                                </span>
+                                <%= mandat.contact.telephone %>
+                            </div>
+
+                            <div class="container-row"><span class="row-label">LinkedIn :
+                                </span>
+                                <%= mandat.contact.linkedin %>
+                            </div>
+                            <% } else { %>
+                                <div class="container-row">Aucune informations de contact</div>
+                                <% } %>
+
+                                    <div class="container-row"><span class="row-label">Parution :
+                                        </span>
+                                        <%= mandat.parution==1 ? 'activée' : 'desactivée' %>
+                                    </div>
+
+                                    <div class="container-action"><a href="/edit-contact?id=<%= mandat._id %>"
+                                            class="container-cta">Modifier</div></a>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            </body>
+            <script>
+                function deleteMandataire(id) {
+                    if (confirm('Voulez-vous vraiment supprimer cette mandat ?')) {
+                        fetch(`http://localhost:9999/api/mandats/${id}`, {
+                            method: "DELETE",
+                            headers: {
+                                'Content-type': 'application/json'
+                            }
+                        })
+                        alert('Adhérent supprimé')
+                        setTimeout(() => {
+                        document.location.assign('/mandats');
+                            
+                        }, 500);
+                    }
+                }
+            </script>
+            <script src="/js/index.js"></script>
+
+            </html>

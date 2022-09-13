@@ -50,7 +50,9 @@ const AdherentSchema = new mongoose.Schema({
         type: Boolean,
     },  
     contact: {
-        titre : String,
+        titre : {
+            type : String
+        },
         nom : String,
         prenom : String,
         telephone : String,

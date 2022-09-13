@@ -12,6 +12,11 @@ const representationRoutes = require('./app/routes/representation.route')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Set view engine
+app.set('view engine', 'ejs')
+// Static Files
+app.use(express.static('public'));
+
 // ROUTES API
 app.use('/api/adherents', adherentRoutes)
 app.use('/api/mandats', mandatRoutes)
