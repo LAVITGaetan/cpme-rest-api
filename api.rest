@@ -1,14 +1,14 @@
 GET http://localhost:9999/api/adherents/631f77927ceff9a4876c4aaa
 
 ###
-GET http://localhost:9999/api/mandataires
+GET http://localhost:9999/api/adherents
 
 ### 
 POST http://localhost:9999/api/adherents
 Content-Type: application/json
 
 {
-    "entreprise": "sissy slut",
+    "entreprise": "entreprise",
     "section": "section",
     "adresse": "adresse",
     "activite": "activite",

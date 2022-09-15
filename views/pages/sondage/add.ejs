@@ -1,0 +1,113 @@
+<%- include('../includes/header.ejs') %>
+
+
+    <body onload="updateQuestionCount()">
+        <%- include('../includes/navbar.ejs') %>
+            <div class="content-form">
+                <div class="form-tools scrollbar">
+                    <div class="tools-flex">
+                        <div class="tools-item" id="js-question">
+                            <div class="tools-item-figure">
+                                <img src="img/question-sign.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Question</h6>
+                        </div>
+                        <div class="tools-item" id="js-identite">
+                            <div class="tools-item-figure">
+                                <img src="img/identite.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Nom et Prénom</h6>
+                        </div>
+                        <div class="tools-item" id="js-raison-sociale">
+                            <div class="tools-item-figure">
+                                <img src="img/entreprise.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Raison sociale</h6>
+                        </div>
+                        <div class="tools-item" id="js-email">
+                            <div class="tools-item-figure">
+                                <img src="img/mail.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Adresse E-mail</h6>
+                        </div>
+                        <div class="tools-item" id="js-date">
+                            <div class="tools-item-figure">
+                                <img src="img/date.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Date</h6>
+                        </div>
+                        <div class="tools-item" id="js-telephone">
+                            <div class="tools-item-figure">
+                                <img src="img/telephone.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Téléphone</h6>
+                        </div>
+                        <div class="tools-item" id="js-section">
+                            <div class="tools-item-figure">
+                                <img src="img/section.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Section</h6>
+                        </div>
+                        <div class="tools-item" id="js-secteur">
+                            <div class="tools-item-figure">
+                                <img src="img/location.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Secteur</h6>
+                        </div>
+                        <div class="tools-item" id="js-rgpd">
+                            <div class="tools-item-figure">
+                                <img src="img/rgpd.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">RGPD</h6>
+                        </div>
+
+                        <div class="tools-item" id="js-choix">
+                            <div class="tools-item-figure">
+                                <img src="img/decision.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Oui / Non</h6>
+                        </div>
+                        <div class="tools-item" id="js-salaries">
+                            <div class="tools-item-figure">
+                                <img src="img/teamwork.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Nombre de salariés</h6>
+                        </div>
+                        <div class="tools-item" id="js-notation">
+                            <div class="tools-item-figure">
+                                <img src="img/slider.png" width="25px" height="25px">
+                            </div>
+                            <h6 class="tools-item-label">Notation sur echelle</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-editor scrollbar" id="js-content">
+                    <h2 class="editor-title">Titre du sondage</h2>
+                    <div class="editor-save">Sauvegarder le formulaire</div>
+                    <div class="editor-question" style="order: 1" id="js-container1">
+                        <div class="question-counter"></div>
+                        <div onclick="destroyInput(1)" class="question-delete"><img src="img/chat.png" width="32px"
+                                height="32px" alt="delete">
+                        </div>
+                        <div onclick="slideUp(1)" class="question-slide slide-up"><img src="img/down-chevron.png"
+                                style="transform: rotate(180deg)" width="20px" height="20px" alt="delete"></div>
+                        <div onclick="slideDown(1)" class="question-slide slide-down"><img src="img/down-chevron.png"
+                                width="20px" height="20px" alt="delete"></div>
+                        <label class="question-label" contenteditable>Raison sociale de l' entreprise</label>
+                        <h4 onclick="updateDescription(1)" class="question-sub" contenteditable>Cliquez ici pour ajouter une description</h4>
+                        <input class="question-input" type="text" placeholder="Réponse">
+                        <div class="question-required">
+                            <div onclick="setCheckboxStatus(1)" class="required-checkbox">
+                                <div class="required-clippath"></div>
+                            </div>
+                            <div class="required-label">Obligatoire</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </body>
+    <script src="js/form.js"></script>
+    <script src="js/index.js"></script>
+
+    </html>
