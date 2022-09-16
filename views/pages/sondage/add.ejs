@@ -1,4 +1,5 @@
 <%- include('../includes/header.ejs') %>
+
     <body onload="updateQuestionCount()">
         <%- include('../includes/navbar.ejs') %>
             <div class="content-form">
@@ -80,7 +81,7 @@
                     </div>
                 </div>
                 <div class="form-editor scrollbar" id="js-content">
-                    <h2 class="editor-title" contenteditable>Titre du sondage</h2>
+                    <h2 class="editor-title" contenteditable id="js-title">Titre du sondage</h2>
                     <div class="editor-save" onclick="saveForm()">Sauvegarder le formulaire</div>
                     <div class="editor-question" style="order: 1" id="js-container1">
                         <div class="question-counter"></div>
@@ -92,7 +93,8 @@
                         <div onclick="slideDown(1)" class="question-slide slide-down"><img src="img/down-chevron.png"
                                 width="20px" height="20px" alt="delete"></div>
                         <label class="question-label" contenteditable>Raison sociale de l' entreprise</label>
-                        <h4 onclick="updateDescription(1)" class="question-sub" contenteditable>Cliquez ici pour ajouter une description</h4>
+                        <h4 onclick="updateDescription(1)" class="question-sub" contenteditable>Cliquez ici pour ajouter
+                            une description</h4>
                         <input class="question-input" type="text" placeholder="Réponse">
                         <div class="question-required">
                             <div onclick="setCheckboxStatus(1)" class="required-checkbox">
@@ -105,6 +107,49 @@
             </div>
 
     </body>
+    
     <script src="js/form.js"></script>
     <script src="js/index.js"></script>
+    <script>
+        console.log(formArray);
+        function saveForm() {
+
+            let sondage = {
+                nom: 'Formulaire de qualité',
+                titre: document.getElementById('js-title').innerHTML,
+                parution: false
+            }
+            let questions = formArray
+
+            try {
+                fetch(`http://localhost:9999/api/sondages`, {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(sondage)
+                })
+                    .then((response) => response.json())
+                    .then((response) => {
+
+                        for (let i = 0; i < questions.length; i++) {
+                            questions[i].form_id = response._id;
+                            questions[i].label = document.getElementsByClassName('question-label')[i].innerHTML;
+                            fetch(`http://localhost:9999/api/questions`, {
+                                headers: {
+                                    'Content-type': 'application/json'
+                                },
+                                method: "POST",
+                                body: JSON.stringify(questions[i])
+                            })
+                        }
+                    })
+
+
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
     </html>

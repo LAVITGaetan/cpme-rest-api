@@ -10,6 +10,7 @@ let formArray = [
         },
         type: 'text',
         order: 1,
+        form_id: ''
     }
 ]
 
@@ -86,6 +87,7 @@ function addItemToArray(label, type, order, id) {
         },
         type: type,
         order: order + 1,
+        form_id:''
     }
     formArray.push(item);
 }
@@ -500,9 +502,3 @@ document.getElementById('js-salaries').addEventListener('click', () => {
 document.getElementById('js-notation').addEventListener('click', () => {
     addQuestion('notation');
 })
-
-// Sauvegarder le formulaire
-function saveForm() {
-    console.log('Sauvegarde du formulaire en cours');
-    console.log(formArray);
-}

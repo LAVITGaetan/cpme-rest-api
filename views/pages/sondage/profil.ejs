@@ -1,78 +1,8 @@
 <%- include('../includes/header.ejs') %>
     <%- include('../includes/navbar.ejs') %>
 PROFIL SONDAGE
-
             </body>
-            <script>
-                function enableAdherent(id) {
-                    if (confirm('Voulez-vous vraiment activer cette adhérent ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/status/${id}/true`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
-                function disableAdherent(id) {
-                    if (confirm('Voulez-vous vraiment désactiver cette adhérent ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/status/${id}/false`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
-                function enableParution(id) {
-                    if (confirm('Voulez-vous vraiment activer cette Parution ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/parution/${id}/true`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
-                function disableParution(id) {
-                    if (confirm('Voulez-vous vraiment désactiver cette Parution ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/parution/${id}/false`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
 
-                function deleteAdherent(id) {
-                    if (confirm('Voulez-vous vraiment supprimer cette adhérent ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/${id}`, {
-                            method: "DELETE",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        alert('Adhérent supprimé')
-                        setTimeout(() => {
-                        document.location.assign('/adherents');
-                            
-                        }, 500);
-                    }
-                }
-            </script>
             <script src="/js/index.js"></script>
 
             </html>

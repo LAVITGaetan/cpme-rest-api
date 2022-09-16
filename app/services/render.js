@@ -7,7 +7,7 @@ exports.login = (req, res) => {
 
 exports.index = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/adherents`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`)
         res.render('pages/accueil', { title: 'Accueil', adherents: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -17,7 +17,7 @@ exports.index = async (req, res) => {
 // Adhérents
 exports.getAdherents = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/adherents`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`)
         res.render('pages/adherent/liste', { title: 'Liste des adhérents', adherents: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -26,7 +26,7 @@ exports.getAdherents = async (req, res) => {
 
 exports.getAdherent = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/adherents/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`)
         res.render('pages/adherent/profil', { title: 'Profil adhérent', adherent: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -39,7 +39,7 @@ exports.addAdherent = (req, res) => {
 
 exports.editAdherent = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/adherents/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`)
         res.render('pages/adherent/edit', { title: 'Modifier un adhérent', adherent: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -48,7 +48,7 @@ exports.editAdherent = async (req, res) => {
 
 exports.editContact = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/adherents/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`)
         res.render('pages/adherent/edit-contact', { title: 'Modifier un contact', adherent: fetch.data })
         console.log(`données de contact récupérées : ${fetch.data.contact}`);
     } catch (error) {
@@ -59,7 +59,7 @@ exports.editContact = async (req, res) => {
 // Mandats 
 exports.getMandats = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/mandats`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats`)
         res.render('pages/mandat/liste', { title: 'Liste des mandats', mandats: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -68,7 +68,7 @@ exports.getMandats = async (req, res) => {
 
 exports.getMandat = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/mandats/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`)
         res.render('pages/mandat/profil', { title: 'Profil mandat', mandat: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -81,7 +81,7 @@ exports.addMandat = (req, res) => {
 
 exports.editMandat = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/mandats/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`)
         res.render('pages/mandat/edit', { title: 'Modifier un mandat', mandat: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -91,7 +91,7 @@ exports.editMandat = async (req, res) => {
 // Mandataires 
 exports.getMandataires = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/mandataires`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires`)
         res.render('pages/mandataire/liste', { title: 'Liste des mandataires', mandataires: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -100,7 +100,7 @@ exports.getMandataires = async (req, res) => {
 
 exports.getMandataire = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/mandataires/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`)
         res.render('pages/mandataire/profil', { title: 'Profil mandataire', mandataire: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -113,7 +113,7 @@ exports.addMandataire = (req, res) => {
 
 exports.editMandataire = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/mandataires/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`)
         res.render('pages/mandataire/edit', { title: 'Modifier un mandataire', mandataire: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -123,12 +123,8 @@ exports.editMandataire = async (req, res) => {
 // Sondages
 exports.getSondages = async (req, res) => {
     try {
-        let fetch = await axios.get(`https://cpme-rest-api.herokuapp.com/sondages`)
-        res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: {
-            nom : "formulaire 1",
-            titre : "",
-            parution : "",
-        } })
+        let fetch = await axios.get(`${process.env.LOCAL_API}/sondages`)
+        res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: fetch.data})
     } catch (error) {
         res.status(500).send({ message: error.message })
     }

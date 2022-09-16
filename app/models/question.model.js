@@ -4,27 +4,31 @@ const mongoose = require('mongoose');
 const QuestionSchema = new mongoose.Schema({
     label: {
         type: String,
-        required : true,
+        required: true,
     },
     required: {
         type: Boolean,
-        required : true,
+        required: true,
     },
     description: {
         set: {
-            type : Boolean,
+            type: Boolean,
         },
         content: {
-            type : String,
+            type: String,
         }
     },
     type: {
         type: String,
-        required : true
+        required: true
     },
     order: {
-        type : Number,
-        required : true
+        type: Number,
+        required: true
+    },
+    form_id: {
+        type: String,
+        required: true
     }
 });
 
