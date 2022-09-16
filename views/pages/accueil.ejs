@@ -82,7 +82,7 @@
         <div class="index5">
             <div class="index-last">
                 <h3 class="last-title">Derniers adhérents</h3>
-                <% if (adherents.length > 5) { %>
+                <% if (adherents.length >= 5) { %>
                     <% for( let i=0; i < 5; i++ ) { %>
                         <a href="/profil-adherent?id=<%= adherents[i]._id %> " class="last-row no-decoration">
                             <span class="last-row-title">
@@ -90,9 +90,8 @@
                             </span>
                             <img src="img/go.png" width="24px" height="24px">
                         </a>
-                        <% } %>
+                    <% } %>
                 <% } %>
-
             </div>
         </div>
     </div>

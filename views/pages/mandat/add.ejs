@@ -6,15 +6,15 @@
             <div class="content">
                 <h1 class="title">Ajouter un mandat</h1>
                 <div class="form-container">
-                    <form class="form-flex" action="/api/mandats" method="POST">
+                    <form class="form-flex" method="POST" onsubmit="postForm(event)">
                         <div class="form-group">
                             <label for="entreprise" class="form-label">Label</label>
-                            <input required name="label" id="entreprise" type="text" class="form-input"
+                            <input required id="label" name="label" id="entreprise" type="text" class="form-input"
                                 placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="categorie" class="form-label">Catégorie</label>
-                            <select required name="categorie" id="categorie" class="form-select">
+                            <select required id="categorie" name="categorie" id="categorie" class="form-select">
                                 <option value="">Choisir une section</option>
                                 <option value="artisanat">Artisanat</option>
                                 <option value="efj">efj</option>
@@ -26,23 +26,23 @@
                         </div>
                         <div class="form-group">
                             <label for="nom" class="form-label">Nom</label>
-                            <input required type="text" name="nom" class="form-input" placeholder="Réponse">
+                            <input required type="text" id="nom" name="nom" class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="mission" class="form-label">Mission</label>
-                            <input required type="text" name="mission" class="form-input" placeholder="Réponse">
+                            <input required type="text" id="mission" name="mission" class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="composition" class="form-label">Composition</label>
-                            <input required type="text" name="composition" class="form-input" placeholder="Réponse">
+                            <input required type="text" id="composition" name="composition" class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="prenom" class="form-label">Renouvellement</label>
-                            <input required type="text" name="renouvellement" class="form-input" placeholder="Réponse">
+                            <input required type="text" id="renouvellement" name="renouvellement" class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Durée</label>
-                            <input required type="text" name="duree" class="form-input" placeholder="Réponse">
+                            <input required type="text" id="duree" name="duree" class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-action">
                             <input type="submit" class="cta" value="Confirmer la création">
@@ -52,6 +52,37 @@
             </div>
 
     </body>
+<script>
+    function postForm(event) {
+        event.preventDefault();
+            let mandat = {
+                label: document.getElementById('label').value,
+                categorie: document.getElementById('categorie').value,
+                nom: document.getElementById('nom').value,
+                mission: document.getElementById('mission').value,
+                composition: document.getElementById('composition').value,
+                renouvellement: document.getElementById('renouvellement').value,
+                duree: document.getElementById('duree').value,
+            }
+            console.log(mandat);
+            try {
+                fetch(`https://cpmereunion.herokuapp.com/api/mandats`, {
+                headers : {
+                    'Content-type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(mandat)
+            })
+            alert('Mandat ajouté à la base de donnée, vous allez être redirigé')
+            setTimeout(() => {
+            document.location.assign('/mandats')
+            }, 500);
+            } catch (error) {
+                console.log(error);
+            }
+    }
+</script>
+
     <script src="/js/index.js"></script>
 
     </html>

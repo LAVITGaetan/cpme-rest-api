@@ -112,15 +112,16 @@
             }
             console.log(adherent);
             try {
-                fetch(`http://localhost:9999/api/adherents/${id}`, {
+                fetch(`https://cpmereunion.herokuapp.com/api/adherents/${id}`, {
                     headers: {
                         'Content-type': 'application/json'
                     },
                     method: "PATCH",
                     body: JSON.stringify(adherent)
                 })
+                alert('Adhérent modifié')
                 setTimeout(() => {
-                    document.location.reload()
+                    document.location.assign(`/profil-adherent?id=<%= adherent._id%>`)
                 }, 500);
 
             } catch (error) {

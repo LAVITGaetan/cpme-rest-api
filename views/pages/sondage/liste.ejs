@@ -19,18 +19,13 @@
                     <div class="sondage card">
                         <div class="card-header"></div>
                         <div class="card-figure">
-                            <% if (sondage.logo ) { %>
-                                <img class="card-image" src="upload/<%= sondage.logo %>">
-                                <% }else{ %>
-                                    <img class="add-photo" width="24px" height="24px" src="img/no-photo.png">
-                                    <% } %>
-
+                                <img class="card-image" src="https://lavit-gaetan.com/wp-content/uploads/2021/11/cropped-logo_cpme.jpg">
                         </div>
-                        <div class="card-title js-entreprise">
-                            <%= sondage.label %>
+                        <div class="card-title js-nom">
+                            <%= sondage.nom %>
                         </div>
-                        <div class="card-subtitle js-section">
-                            Réponses count
+                        <div class="card-subtitle js-titre">
+                            Nombre de réponses
                         </div>
                         <a href="/profil-sondage?id=<%= sondage._id %>" class="no-decoration card-edit">
                             <img src="img/edit.png" width="12px" height="12px" alt="edit">

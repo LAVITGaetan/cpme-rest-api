@@ -65,7 +65,7 @@
         function deleteAdherent(id) {
             if (confirm('Voulez-vous vraiment supprimer cette mandat ?')) {
                 console.log(id);
-                fetch(`http://localhost:9999/api/mandats/${id}`, {
+                fetch(`https://cpmereunion.herokuapp.com/api/mandats/${id}`, {
                     method: "DELETE",
                     headers: {
                         'Content-type': 'application/json'

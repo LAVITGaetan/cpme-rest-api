@@ -239,7 +239,7 @@ function createInput(type, id) {
                 selectOption.setAttribute("class", "select-option");
                 selectOption.setAttribute("value", sectionArray[i]);
                 selectOption.innerHTML = sectionArray[i];
-                container.getElementsByClassName('question-select')[0].appendChild(selectOption)
+                container.getElementsByClassName('question-select')[0].appendChild(selectOption);
             }
             break;
         case "secteur":
@@ -276,7 +276,6 @@ function createInput(type, id) {
             container.appendChild(defaultInput);
             break;
     }
-
 }
 
 function createRequired(id) {
@@ -501,3 +500,9 @@ document.getElementById('js-salaries').addEventListener('click', () => {
 document.getElementById('js-notation').addEventListener('click', () => {
     addQuestion('notation');
 })
+
+// Sauvegarder le formulaire
+function saveForm() {
+    console.log('Sauvegarde du formulaire en cours');
+    console.log(formArray);
+}

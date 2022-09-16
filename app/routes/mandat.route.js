@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
         res.status(500).send({ message: error.message })
     }
 })
-
+    
 // Update mandat
 router.patch('/:id', async (req, res) => {
     try {

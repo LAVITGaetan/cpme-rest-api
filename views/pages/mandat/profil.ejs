@@ -108,7 +108,7 @@
             <script>
                 function deleteMandataire(id) {
                     if (confirm('Voulez-vous vraiment supprimer cette mandat ?')) {
-                        fetch(`http://localhost:9999/api/mandats/${id}`, {
+                        fetch(`https://cpmereunion.herokuapp.com/api/mandats/${id}`, {
                             method: "DELETE",
                             headers: {
                                 'Content-type': 'application/json'

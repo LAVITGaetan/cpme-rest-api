@@ -1,7 +1,17 @@
 GET http://localhost:9999/api/adherents/631f77927ceff9a4876c4aaa
 
 ###
-GET http://localhost:9999/api/adherents
+GET http://localhost:9999/api/sondages
+
+###
+POST http://localhost:9999/api/sondages
+Content-Type: application/json
+
+{
+    "nom" : "Sondage",
+    "titre": "Difficultés des chefs d' entreprise",
+    "parution": true
+}
 
 ### 
 POST http://localhost:9999/api/adherents

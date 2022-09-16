@@ -121,8 +121,17 @@ exports.editMandataire = async (req, res) => {
 }
 
 // Sondages
-exports.getSondages = (req, res) => {
-    res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: [{ label: "Sondage1" }] })
+exports.getSondages = async (req, res) => {
+    try {
+        let fetch = await axios.get(`${process.env.HEROKU_API}/sondages`)
+        res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: {
+            nom : "formulaire 1",
+            titre : "",
+            parution : "",
+        } })
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+    }
 }
 
 exports.getSondage = (req, res) => {

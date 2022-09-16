@@ -7,6 +7,7 @@ const adherentRoutes = require('./app/routes/adherent.route')
 const mandatRoutes = require('./app/routes/mandat.route')
 const mandataireRoutes = require('./app/routes/mandataire.route')
 const representationRoutes = require('./app/routes/representation.route')
+const sondageRoutes = require('./app/routes/sondage.route')
 
 // middlewares
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use('/api/adherents', adherentRoutes)
 app.use('/api/mandats', mandatRoutes)
 app.use('/api/mandataires', mandataireRoutes)
 app.use('/api/representations', representationRoutes)
+app.use('/api/sondages', sondageRoutes)
 
 // ROUTE Login
 app.get('/login', services.login)

@@ -19,7 +19,7 @@ body {
 .title {
   font-size: 25px;
   font-weight: 800;
-  color: #0a2439;
+  color: #081d2e;
   position: relative;
   padding-bottom: 0.5em;
   margin-bottom: 1em;
@@ -34,7 +34,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 35px;
+  padding: 0 5%;
 }
 
 .navbar-logo {
@@ -45,7 +45,7 @@ body {
 .navbar-links {
   width: calc(100% - 200px);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
@@ -69,6 +69,7 @@ body {
   text-align: center;
   width: fit-content;
   font-weight: 500;
+  margin: 0 35px;
   text-decoration: none;
 }
 
@@ -99,7 +100,7 @@ body {
 }
 
 .card-header {
-  background-color: #0a2439;
+  background-color: #081d2e;
   width: 100%;
   height: 64px;
 }
@@ -140,7 +141,7 @@ body {
   font-size: 17px;
   margin-bottom: 0.5em;
   font-weight: 700;
-  color: #0a2439;
+  color: #081d2e;
   padding: 0 5% .5em 5%;
   text-align: center;
   max-height: 42px;
@@ -151,7 +152,7 @@ body {
   font-size: 17px;
   margin-bottom: 0.5em;
   font-weight: 700;
-  color: #0a2439;
+  color: #081d2e;
 }
 
 .card-subtitle {
@@ -254,7 +255,7 @@ body {
   width: fit-content;
   padding: 0.75em 1em;
   background-color: #fff;
-  color: #0a2439;
+  color: #081d2e;
   border: 2px solid var(--clrCta)20;
   border-radius: 3px;
   margin: 0 1em 0 0;
@@ -279,7 +280,7 @@ body {
   max-width: 400px;
   border-left: 3px solid var(--clrCta);
   margin: 20px 0 40px 0;
-  box-shadow: 0 10px 15px 3px #0a243910;
+  box-shadow: 0 10px 15px 3px #081d2e10;
 }
 
 .searchbox-input {
@@ -352,7 +353,7 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 3px;
-  background-color: #0a2439;
+  background-color: #081d2e;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -362,7 +363,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 0.5em;
-  color: #0a2439;
+  color: #081d2e;
 }
 
 .form-group {
@@ -429,7 +430,7 @@ body {
 .remember-text {
   padding-left: 10px;
   font-weight: 600;
-  color: #0a2439;
+  color: #081d2e;
 }
 
 /* Accueil */
@@ -442,7 +443,7 @@ body {
   grid-row-gap: 30px;
   min-height: 100%;
   overflow: auto;
-  padding: 30px;
+  padding: 50px 5%;
 }
 
 .index1 {
@@ -510,7 +511,7 @@ body {
   font-weight: 700;
   font-size: 18px;
   color: #fff;
-  background-color: #0A2439;
+  background-color: #081d2e;
   text-align: center;
   width: 100%;
   padding: 1em;
@@ -548,7 +549,7 @@ body {
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  color: #0A2439;
+  color: #081d2e;
   max-width: 10ch;
   line-height: 18px;
   max-height: 18px;
@@ -611,7 +612,7 @@ body {
   font-weight: 700;
   font-size: 20px;
   padding-top: 20px;
-  color: #0a2439;
+  color: #081d2e;
 }
 
 .graph-stat {
@@ -638,7 +639,7 @@ body {
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  color: #0a2439;
+  color: #081d2e;
   padding-left: 8px;
 }
 
@@ -646,7 +647,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0A2439;
+  background-color: #081d2e;
   width: 100%;
   margin: 0 auto;
   border-bottom: 5px solid var(--clrCta);
@@ -700,7 +701,7 @@ body {
     font-weight: 700;
   font-size: 20px;
   line-height: 22px;
-  color: #0A2439;
+  color: #081d2e;
   padding: 32px 5% .5em 5%;
   }
   
@@ -716,7 +717,7 @@ body {
     width: 100%;
     padding: 1em;
     background-color: #00c4cc20;
-    color: #0A2439;
+    color: #081d2e;
     font-size: 17px;
     font-weight: 600;
   }
@@ -743,7 +744,7 @@ body {
   .profil-card-label {
     font-weight: 600;
   font-size: 16px;
-  color: #0A2439;
+  color: #081d2e;
   padding-left: 10px;
   }
   
@@ -755,7 +756,7 @@ body {
     font-weight: 600;
     font-size: 16px;
     text-align: center;
-  color: #0A2439;
+  color: #081d2e;
   text-align: center;
   cursor: pointer;
   margin-bottom: 1em;
@@ -764,7 +765,7 @@ body {
   .profil-ctd {
     width: 45%;
     padding: 1em;
-    color: #0A2439;
+    color: #081d2e;
     border: 3px solid var(--clrCta) ;
     font-weight: 600;
   font-size: 16px;
@@ -821,18 +822,18 @@ body {
   .portrait-card-title {
   font-weight: 600;
   font-size: 17px;
-  color: #0A2439;
+  color: #081d2e;
   padding: 16px 32px 8px 0;
   }
   
   .portrait-card-subtitle {
     font-weight: 600;
   font-size: 15px;
-  color: #0A2439;
+  color: #081d2e;
   }
   
   .row-label-collapse {
-    background-color: #0A243910;
+    background-color: #081d2e10;
     padding: 1em;
     cursor: pointer;
   }
@@ -852,7 +853,7 @@ body {
   }
   
 .container-header {
-  background-color: #0a2439;
+  background-color: #081d2e;
   color: #fff;
   font-size: 17px;
   padding: 1.2em 5%;
@@ -867,13 +868,13 @@ body {
 }
 
 .container-action {
-  margin-top: 1.5em;
-  width: 100%;
+  width: 100px;
   background-color: #00c4cc;
   display: flex;
   align-items: center;
   justify-content: center;
-height: 40px;
+  height: 40px;
+  margin: 2em 0 1.5em 5%;
 }
 
 .container-cta {
@@ -900,7 +901,7 @@ width: 100%;
   width: 350px;
   background-color: var(--clrMain);
   max-height: 100%;
-  padding: 50px;
+  padding: 50px;box-shadow: #00c4cc10 3px 3px 6px 0px inset, #00c4cc10 -3px -3px 6px 1px inset;
   overflow: auto;
 }
 
@@ -980,9 +981,9 @@ cursor: pointer;
   background-color: #fff;
   height: auto;
   padding: 48px 100px 32px 32px;
-box-shadow: 0 5px 10px 5px #00c4cc10;
-position: relative;
-margin-bottom: 64px;
+  box-shadow: 0 5px 10px 5px #00c4cc10;
+  position: relative;
+  margin-bottom: 64px;
 }
 
 .question-counter {
@@ -991,7 +992,7 @@ margin-bottom: 64px;
   width: 32px;
   height: 32px;
   position: absolute;
-background-color: #081d2e;
+background-color: #233a4d;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -1063,7 +1064,7 @@ border: 2px dotted #081d2e20;
 .question-input, .question-select {
   height: 50px;
   width: 100%;
-  border: 2px solid #0A243910;
+  border: 2px solid #081d2e10;
   padding: 0 5px;
 }
 

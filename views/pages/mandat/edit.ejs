@@ -6,7 +6,7 @@
             <div class="content">
                 <h1 class="title">Modifier un adhérent</h1>
                 <div class="form-container">
-                    <form class="form-flex" method="POST">
+                    <form class="form-flex" method="POST" onsubmit="editMandat(event)">
                         <div class="form-group">
                             <label for="label" class="form-label">Label</label>
                             <input value="<%= mandat.label %>" required name="label" id="label"
@@ -93,18 +93,18 @@
                 renouvellement: document.getElementById('renouvellement').value,
                 duree: document.getElementById('duree').value,
             }
-            console.log(mandat);
             try {
-                fetch(`http://localhost:9999/api/mandats/${id}`, {
+                fetch(`https://cpmereunion.herokuapp.com/api/mandats/${id}`, {
                     headers: {
                         'Content-type': 'application/json'
                     },
                     method: "PATCH",
                     body: JSON.stringify(mandat)
                 })
-                setTimeout(() => {
-                    document.location.reload()
-                }, 500);
+                alert('Mandat modifié, vous allez être redirigé')
+            setTimeout(() => {
+            document.location.assign(`/profil-mandat?id=${id}`)
+            }, 500);
 
             } catch (error) {
                 console.log(error);
