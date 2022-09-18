@@ -46,43 +46,42 @@
                     </div>
 
                     <div class="container">
-                        <div class="container-header">Parution dans l' annuaire</div>
-                        <% if (mandataire.contact) { %>
-
-                            <div class="container-row"><span class="row-label">Contact Principal :
-                                </span>
-                                <%= mandataire.contact.titre %>
-                            </div>
-                            <div class="container-row"><span class="row-label">Identité :
-                                </span>
-                                <%= mandataire.contact.prenom %>
-                                    <%= mandataire.contact.nom %>
-                            </div>
-                            <div class="container-row"><span class="row-label">Email :
-                                    <%= mandataire.contact.email %>
-                                </span>
-
-                            </div>
-                            <div class="container-row"><span class="row-label">Téléphone :
-                                </span>
-                                <%= mandataire.contact.telephone %>
-                            </div>
-
-                            <div class="container-row"><span class="row-label">LinkedIn :
-                                </span>
-                                <%= mandataire.contact.linkedin %>
-                            </div>
-                            <% } else { %>
-                                <div class="container-row">Aucune informations de contact</div>
-                                <% } %>
-
-                                    <div class="container-row"><span class="row-label">Parution :
-                                        </span>
-                                        <%= mandataire.parution==1 ? 'activée' : 'desactivée' %>
+                        <div class="container-header">Liste des mandats associés</div>
+                        <% if (representations.filter(el=> el.id_mandataire === mandataire._id).length > 0) { %>
+                            <% representations.filter(el=> el.id_mandataire === mandataire._id).forEach(representation=> { %>
+                                <div class="card-representation">
+                                    <div class="card-representation-title">
+                                        <%= mandats.find(el=> el._id === representation.id_mandat).label %>
                                     </div>
+                                    <div class="card-representation-subtitle">
+                                        <%= representation.titre %>
+                                    </div>
+                                    <div onclick="deleteRepresentation('<%= representation._id %>')"
+                                        class="card-representation-delete"><img src="img/chat.png" width="32px"
+                                            height="32px" alt="delete">
+                                    </div>
+                                </div>
 
-                                    <div class="container-action"><a href="/edit-contact?id=<%= mandataire._id %>"
-                                            class="container-cta">Modifier</div></a>
+                                <% }) %>
+                                    <% } %>
+                                        <div class="card-representation">
+                                            <div class="card-representation-title">Lier un nouveau
+                                                mandat</div>
+                                            <form onsubmit="newRepresentation(event, '<%= mandataire._id %>')">
+                                                <select name="mandat" id="mandat">
+                                                    <option value="">Sélectionner un mandataire</option>
+                                                    <% mandats.forEach(mandat=> { %>
+                                                        <option value="<%= mandat._id %>">
+                                                            <%= mandat.label %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                                <input class="card-representation-input" type="text" placeholder="Rôle"
+                                                    id="titre">
+                                                <input type="submit" class="card-representation-submit"
+                                                    value="Assigner un mandat">
+                                            </form>
+                                        </div>
                     </div>
                 </div>
 
@@ -93,6 +92,35 @@
 
             </body>
             <script>
+                function newRepresentation(event, id) {
+                    event.preventDefault();
+                    let select = document.getElementById('mandat');
+                    let id_mandat = select.options[select.selectedIndex].value;
+                    let representation = {
+                        id_mandat: id_mandat,
+                        id_mandataire: id,
+                        titre: document.getElementById('titre').value,
+
+                    }
+                    try {
+                        fetch(`http://localhost:9999/api/representations`, {
+                            method: "POST",
+                            headers: {
+                                'Content-type': 'application/json'
+                            },
+                            body: JSON.stringify(representation)
+                        })
+
+                        alert('Représentation ajoutée')
+                        document.location.reload()
+                    } catch (error) {
+                        console.log(error.message);
+                        alert('Seems baddd')
+                    }
+
+
+                }
+
                 function deleteMandat(id) {
                     if (confirm('Voulez-vous vraiment supprimer cette mandataire ?')) {
                         fetch(`http://localhost:9999/api/mandataires/${id}`, {

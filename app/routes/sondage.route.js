@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Sondage = require('../models/sondage.model');
+const Question = require('../models/question.model');
 
 // Retrieve all sondages
 router.get('/', async (req, res) => {
@@ -19,6 +20,18 @@ router.get('/:id', async (req, res) => {
         res.send(sondage)
     } catch (error) {
         res.status(500).send({ message: error.message })
+    }
+})
+
+// Retrieve one sondage
+router.get('/:id/questions', async (req, res) => {
+    try {
+        const questions = await Question.find().sort({ order: 1});
+        let sondage_questions = questions.filter(el => el.form_id === req.params.id);
+        res.send(sondage_questions)
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
     }
 })
 

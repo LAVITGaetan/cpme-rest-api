@@ -1,10 +1,158 @@
 <%- include('../includes/header.ejs') %>
 
-
-    <body>
+    <body onload="updateQuestionCount()">
         <%- include('../includes/navbar.ejs') %>
-EDIT SONDAGE
+            <div class="content-form">
+
+                <%- include('../includes/form-tools.ejs') %>
+
+                    <div class="form-editor scrollbar" id="js-content">
+                        <h2 class="editor-title" contenteditable id="js-title">
+                            <%= sondage.titre %>
+                        </h2>
+                        <div class="editor-save" onclick="saveForm()">Sauvegarder le formulaire</div>
+                        <% questions.forEach(question=> { %>
+                            <div class="editor-question" style="order:<%= question.order %>"
+                                id="js-container<%= question.order %>">
+                                <div class="question-counter"></div>
+                                <div onclick="destroyInput('<%= question.order %>')" class="question-delete"><img
+                                        src="img/chat.png" width="32px" height="32px" alt="delete">
+                                </div>
+                                <div onclick="slideUp('<%= question.order %>')" class="question-slide slide-up"><img
+                                        src="img/down-chevron.png" style="transform: rotate(180deg)" width="20px"
+                                        height="20px" alt="delete"></div>
+                                <div onclick="slideDown('<%= question.order %>')" class="question-slide slide-down"><img
+                                        src="img/down-chevron.png" width="20px" height="20px" alt="delete"></div>
+                                <label class="question-label" contenteditable>
+                                    <%= question.label %>
+                                </label>
+                                <% if (question.description.set) { %>
+                                    <h4 onclick="updateDescription('<%= question.order %>')" class="question-sub"
+                                        contenteditable>
+                                        <%= question.description.content %>
+                                    </h4>
+                                    <% }%>
+                                        <% switch (question.type) { case 'text' : %>
+                                            <input type="text" class="question-input" placeholder="Réponse">
+                                            <% break; case 'email' : %>
+                                                <input type="text" class="question-input" placeholder="Réponse">
+                                                <% break; case 'identite' : %>
+                                                    <input type="text" class="question-input" placeholder="Réponse">
+
+                                                    <% break; case 'date' : %>
+                                                        <input type="date" class="question-input">
+                                                        <% break; case 'telephone' : %>
+                                                            <input type="text" class="question-input"
+                                                                placeholder="Réponse">
+                                                            <% break; case 'section' : %>
+                                                                <select class="question-select">
+                                                                    <option class="select-option" value="artisanat">
+                                                                        artisanat</option>
+                                                                    <option class="select-option" value="commerce">
+                                                                        commerce
+                                                                    </option>
+                                                                    <option class="select-option" value="industrie">
+                                                                        industrie</option>
+                                                                    <option class="select-option" value="services">
+                                                                        services
+                                                                    </option>
+                                                                </select>
+                                                                <% break; case 'salaries' : %>
+                                                                    <select class="question-select">
+                                                                        <option class="select-option" value="0 à 5">0 à
+                                                                            5
+                                                                            salariés</option>
+                                                                        <option class="select-option" value="6 à 10">6 à
+                                                                            10
+                                                                            salariés</option>
+                                                                        <option class="select-option" value="11 à 20">11
+                                                                            à
+                                                                            20
+                                                                            salariés</option>
+                                                                        <option class="select-option" value="21 à 50">21
+                                                                            à
+                                                                            50
+                                                                            salariés</option>
+                                                                        <option class="select-option"
+                                                                            value="plus de 51">
+                                                                            plus de
+                                                                            51 salariés</option>
+                                                                    </select>
+                                                                    <% break; case 'rgpd' : %>
+                                                                        <div class="radio-container"><input type="radio"
+                                                                                class="question-radio"
+                                                                                checked="true"><label
+                                                                                class="radio-label"
+                                                                                contenteditable="true">Oui</label></div>
+                                                                        <div class="radio-container"><input type="radio"
+                                                                                class="question-radio"><label
+                                                                                class="radio-label"
+                                                                                contenteditable="true">Non</label></div>
+                                                                        <% break; case 'telephone' : %>
+                                                                            <input type="text" class="question-input"
+                                                                                placeholder="Réponse">
+
+                                                                            <% break; default: break; } %>
+                                                                                <div class="question-required">
+                                                                                    <div onclick="setCheckboxStatus('<%= question.order %>')"
+                                                                                        class="required-checkbox">
+                                                                                        <div class="required-clippath">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="required-label">
+                                                                                        Obligatoire
+                                                                                    </div>
+                                                                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+            </div>
+
     </body>
-    <script src="/js/index.js"></script>
+
+    <script src="js/form.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+
+        function saveForm() {
+
+            let sondage = {
+                nom: 'Formulaire de qualité',
+                titre: document.getElementById('js-title').innerHTML,
+                parution: false
+            }
+            let questions = formArray
+
+            try {
+                fetch(`http://localhost:9999/api/sondages`, {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(sondage)
+                })
+                    .then((response) => response.json())
+                    .then((response) => {
+
+                        for (let i = 0; i < questions.length; i++) {
+                            questions[i].form_id = response._id;
+                            questions[i].label = document.getElementsByClassName('question-label')[i].innerHTML;
+                            fetch(`http://localhost:9999/api/questions`, {
+                                headers: {
+                                    'Content-type': 'application/json'
+                                },
+                                method: "POST",
+                                body: JSON.stringify(questions[i])
+                            })
+                        }
+                    })
+
+
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
 
     </html>

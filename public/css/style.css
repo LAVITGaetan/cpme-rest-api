@@ -898,15 +898,15 @@ width: 100%;
 }
 
 .form-tools {
-  width: 350px;
+  width: 300px;
   background-color: var(--clrMain);
   max-height: 100%;
-  padding: 50px;box-shadow: #00c4cc10 3px 3px 6px 0px inset, #00c4cc10 -3px -3px 6px 1px inset;
+  padding: 10px;box-shadow: #00c4cc10 3px 3px 6px 0px inset, #00c4cc10 -3px -3px 6px 1px inset;
   overflow: auto;
 }
 
 .form-editor {
-  width: calc(100% - 350px);
+  width: calc(100% - 300px);
   max-height: 100%;
   overflow: auto;
   padding: 50px;
@@ -946,7 +946,7 @@ width: 100%;
   display: flex;
   align-items: center;
   border: 2px solid #00c4cc20;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 cursor: pointer;
 }
 
@@ -970,10 +970,14 @@ cursor: pointer;
 }
 
 .editor-title {
-  font-size: 30px;
+  font-size: 25px;
   color: var(--clrMain);
   font-weight: 800;
   margin-bottom: 2.5em;
+  background-color: #fff;
+  width: fit-content;
+  border: 2px solid #00c4cc20;
+  padding: 10px;
 }
 
 .editor-question {
@@ -992,7 +996,7 @@ cursor: pointer;
   width: 32px;
   height: 32px;
   position: absolute;
-background-color: #233a4d;
+background-color: #081d2e;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -1033,7 +1037,7 @@ right: 0;
 }
 
 .question-label {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 1em;
   padding: 5px 10px;
@@ -1065,6 +1069,7 @@ border: 2px dotted #081d2e20;
   height: 50px;
   width: 100%;
   border: 2px solid #081d2e10;
+  font-size: 16px;
   padding: 0 5px;
 }
 
@@ -1109,13 +1114,9 @@ border: 2px solid var(--clrMain);}
 .scrollbar::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-  border-radius: 10px;
 }
-.scrollbar::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
+
 .scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
   background: #00c4cc;
   }
 
@@ -1128,4 +1129,18 @@ border: 2px solid var(--clrMain);}
 
   .radio-label {
     padding: 5px;
+  }
+
+  .card-representation {
+    width: 90%;
+    margin: 1em auto;
+    border: 3px solid #00c4cc10;
+    position: relative;
+  padding: 20px;
+  }
+  
+  .card-representation-delete {
+position: absolute;
+right: 20px;
+top : calc(50% - 16px);
   }

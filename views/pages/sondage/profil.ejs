@@ -1,6 +1,14 @@
 <%- include('../includes/header.ejs') %>
     <%- include('../includes/navbar.ejs') %>
-PROFIL SONDAGE
+
+
+<h5><%= sondage.titre %></h5>
+<h5><%= sondage.nom %></h5>
+<h5><%= sondage.parution %></h5>
+<% questions.forEach(question => { %>
+ <div><%= question.order %></div>
+<% }) %>
+<a href="/edit-sondage?id=<%= sondage._id %>">Editer le formulaire</a>
             </body>
 
             <script src="/js/index.js"></script>

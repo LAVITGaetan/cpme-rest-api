@@ -6,11 +6,11 @@ const RepresentationSchema = new mongoose.Schema({
         type: String
     },
     id_mandat: {
-        type: Number,
+        type: String,
         required: true
     },
     id_mandataire: {
-        type: Number,
+        type: String,
         required: true
     }
 });
