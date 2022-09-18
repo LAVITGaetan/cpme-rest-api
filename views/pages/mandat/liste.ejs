@@ -4,56 +4,56 @@
     <body>
         <%- include('../includes/navbar.ejs') %>
             <div class="content">
-<h1 class="header-title">Liste des mandats</h1>
-            <div class="flex-between">
-                <div class="searchbox">
-                    <input class="searchbox-input" type="text" placeholder="Recherche" onkeyup="searchAdherent()"
-                        id="search"></input>
-                    <div onclick="searchAdherent()" class="searchbox-action"><img width="20px" height="20px"
-                            src="/img/search.png" alt="search"></div>
-                </div>
-                <a href="/add-mandat" class="cta">Nouveau mandat</a>
-            </div>
-
-            <div class="filter">
-                <div class="filter-item filter-selected" onclick="changeFilter(0)">Tous</div>
-                <div class="filter-item" onclick="changeFilter(1)">Artisanat</div>
-                <div class="filter-item" onclick="changeFilter(2)">EFJ</div>
-                <div class="filter-item" onclick="changeFilter(3)">ENI</div>
-                <div class="filter-item" onclick="changeFilter(4)">Ouverture-Regionale</div>
-                <div class="filter-item" onclick="changeFilter(5)">PE-AT</div>
-                <div class="filter-item" onclick="changeFilter(6)">Social</div>
-            </div>
-
-            <div class="flex">
-                <% mandats.forEach(mandat=> { %>
-                    <div class="mandat card">
-                        <div class="card-header"></div>
-                        <div class="card-figure">
-                            <% if (mandat.logo ) { %>
-                                <img class="card-image" src="upload/<%= mandat.logo %>">
-                                <% }else{ %>
-                                    <img class="add-photo" width="24px" height="24px" src="img/no-photo.png">
-                                    <% } %>
-                        </div>
-                        <div class="card-title js-label">
-                            <%= mandat.label %>
-                        </div>
-                        <div class="card-subtitle js-categorie">
-                            <%= mandat.categorie %>
-                        </div>
-                        <a href="/profil-mandat?id=<%= mandat._id %>" class="no-decoration card-edit">
-                            <img src="img/edit.png" width="12px" height="12px" alt="edit">
-                        </a>
-                        <div class="card-delete" onclick="deleteAdherent('<%= mandat._id %>')">
-                            <img src="img/delete.png" width="12px" height="12px" alt="delete">
-                        </div>
+                <h1 class="header-title">Liste des mandats</h1>
+                <div class="flex-between">
+                    <div class="searchbox">
+                        <input class="searchbox-input" type="text" placeholder="Recherche" onkeyup="searchMandat()"
+                            id="search"></input>
+                        <div onclick="searchMandat()" class="searchbox-action"><img width="20px" height="20px"
+                                src="/img/search.png" alt="search"></div>
                     </div>
-                    <% }) %>
+                    <a href="/add-mandat" class="cta">Nouveau mandat</a>
+                </div>
 
+                <div class="filter">
+                    <div class="filter-item filter-selected" onclick="changeFilter(0)">Tous</div>
+                    <div class="filter-item" onclick="changeFilter(1)">Artisanat</div>
+                    <div class="filter-item" onclick="changeFilter(2)">EFJ</div>
+                    <div class="filter-item" onclick="changeFilter(3)">ENI</div>
+                    <div class="filter-item" onclick="changeFilter(4)">Ouverture-Regionale</div>
+                    <div class="filter-item" onclick="changeFilter(5)">PE-AT</div>
+                    <div class="filter-item" onclick="changeFilter(6)">Social</div>
+                </div>
+
+                <div class="flex">
+                    <% mandats.forEach(mandat=> { %>
+                        <div class="mandat card">
+                            <div class="card-header"></div>
+                            <div class="card-figure">
+                                <% if (mandat.logo ) { %>
+                                    <img class="card-image" src="upload/<%= mandat.logo %>">
+                                    <% }else{ %>
+                                        <img class="add-photo" width="24px" height="24px" src="img/no-photo.png">
+                                        <% } %>
+                            </div>
+                            <div class="card-title js-label">
+                                <%= mandat.label %>
+                            </div>
+                            <div class="card-subtitle js-categorie">
+                                <%= mandat.categorie %>
+                            </div>
+                            <a href="/profil-mandat?id=<%= mandat._id %>" class="no-decoration card-edit">
+                                <img src="img/edit.png" width="12px" height="12px" alt="edit">
+                            </a>
+                            <div class="card-delete" onclick="deleteMandat('<%= mandat._id %>')">
+                                <img src="img/delete.png" width="12px" height="12px" alt="delete">
+                            </div>
+                        </div>
+                        <% }) %>
+
+                </div>
             </div>
-            </div>
-            
+
     </body>
     <script>
 
@@ -62,29 +62,35 @@
             modal.style.display = "none";
         }
 
-        function deleteAdherent(id) {
-            if (confirm('Voulez-vous vraiment supprimer cette mandat ?')) {
-                console.log(id);
-                fetch(`https://cpmereunion.herokuapp.com/api/mandats/${id}`, {
+        function deleteMandat(id) {
+            if (confirm('Voulez-vous vraiment supprimer ce mandat et ses representations ?')) {
+                fetch(`http://localhost:9999/api/mandats/${id}`, {
                     method: "DELETE",
                     headers: {
                         'Content-type': 'application/json'
                     }
                 })
+                fetch(`http://localhost:9999/api/representations/${id}/mandats`, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                })
+
             }
             setTimeout(() => {
-                alert('Adhérent supprimé')
+                alert('Mandat supprimé')
                 document.location.reload()
-            }, 100);
+            }, 500);
         }
 
         function changeFilter(id) {
             document.getElementsByClassName('filter-selected')[0].classList.remove('filter-selected');
             document.getElementsByClassName('filter-item')[id].classList.add('filter-selected');
-            searchAdherent();
+            searchMandat();
         }
 
-        function searchAdherent() {
+        function searchMandat() {
             let query = document.getElementById('search').value.toLowerCase();
             let item = document.getElementsByClassName('mandat');
             let length = item.length;

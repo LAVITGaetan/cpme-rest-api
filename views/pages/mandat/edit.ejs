@@ -94,7 +94,7 @@
                 duree: document.getElementById('duree').value,
             }
             try {
-                fetch(`https://cpmereunion.herokuapp.com/api/mandats/${id}`, {
+                fetch(`http://localhost:9999/api/mandats/${id}`, {
                     headers: {
                         'Content-type': 'application/json'
                     },

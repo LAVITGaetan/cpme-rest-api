@@ -53,4 +53,27 @@ router.delete('/:id', async (req, res) => {
         res.send({ message: error.message })
     }
 })
+
+//  Delete representations from mandat
+router.delete('/:id/mandats', async (req, res) => {
+    try {
+        await Representation.deleteMany({id_mandat: req.params.id})
+        res.status(200).send({ message: 'Representations supprimées' })
+    } catch (error) {
+        res.send({ message: error.message })
+        console.log(error.message);
+    }
+})
+
+
+//  Delete representations from mandataire
+router.delete('/:id/mandataires', async (req, res) => {
+    try {
+        await Representation.deleteMany({id_mandataire: req.params.id})
+        res.status(200).send({ message: 'Representations supprimées' })
+    } catch (error) {
+        res.send({ message: error.message })
+        console.log(error.message);
+    }
+})
 module.exports = router;

@@ -61,6 +61,12 @@
                         'Content-type': 'application/json'
                     }
                 })
+                fetch(`http://localhost:9999/api/representations/${id}/mandataires`, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                })
             }
             setTimeout(() => {
                 alert('Adhérent supprimé')

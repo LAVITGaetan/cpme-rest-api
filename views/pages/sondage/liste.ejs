@@ -49,7 +49,7 @@
         function deleteAdherent(id) {
             if (confirm('Voulez-vous vraiment supprimer cette adhérent ?')) {
                 console.log(id);
-                fetch(`https://cpmereunion.herokuapp.com/api/sondages/${id}`, {
+                fetch(`http://localhost:9999/api/sondages/${id}`, {
                     method: "DELETE",
                     headers: {
                         'Content-type': 'application/json'
