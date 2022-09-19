@@ -2,9 +2,10 @@ const axios = require('axios');
 
 // Login
 exports.login = (req, res) => {
-    res.json({ message: 'Page de connexion' })
+    res.render('pages/login', { title: 'Connexion'})
 }
 
+// Index
 exports.index = async (req, res) => {
     try {
         let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`)

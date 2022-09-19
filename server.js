@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const services = require('./app/services/render');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const adherentRoutes = require('./app/routes/adherent.route')
@@ -10,10 +12,17 @@ const mandataireRoutes = require('./app/routes/mandataire.route')
 const representationRoutes = require('./app/routes/representation.route')
 const sondageRoutes = require('./app/routes/sondage.route')
 const questionRoutes = require('./app/routes/question.route')
+const userRoutes = require('./app/routes/user.route')
 
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: 'secretvariable'
+}))
 
 // Set view engine
 app.set('view engine', 'ejs')
@@ -27,6 +36,7 @@ app.use('/api/mandataires', mandataireRoutes)
 app.use('/api/representations', representationRoutes)
 app.use('/api/sondages', sondageRoutes)
 app.use('/api/questions', questionRoutes)
+app.use('/api/users', userRoutes)
 
 // ROUTE Login
 app.get('/login', services.login)

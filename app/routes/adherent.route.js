@@ -1,6 +1,33 @@
 const express = require('express')
 const router = express.Router();
 const Adherent = require('../models/adherent.model');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, `logo_${req.body.entreprise}_${file.originalname}`)
+    }
+})
+
+const fileFilter = function (req, file, cb) {
+
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true)
+    }
+    else {
+        cb(null, false)
+    }
+}
+
+const upload = multer({
+    storage: storage, limits: {
+        fileSize: 1024 * 1024 * 5,
+    },
+    fileFilter: fileFilter
+});
 
 // Get all adhérents
 router.get('/', async (req, res) => {
@@ -23,8 +50,44 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add adhérent
-router.post('/', async (req, res) => {
-    const adherent = new Adherent(req.body);
+router.post('/', upload.single('adherentLogo'), async (req, res) => {
+    if (req.file) {
+        path = req.file.path.substring(7)
+    }
+    else {
+        path = req.body.logo || 'none'
+    }
+    const adherent = new Adherent({
+        entreprise: req.body.entreprise,
+        section: req.body.section,
+        adresse: req.body.adresse,
+        activite: req.body.activite,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        email: req.body.email,
+        telephone: req.body.telephone,
+        identifiant: req.body.identifiant,
+        siteweb: req.body.siteweb,
+        logo: path,
+        parution: req.body.parution,
+        status: req.body.status,
+        contact: {
+            titre: req.body.contact_titre,
+            nom: req.body.contact_nom,
+            prenom: req.body.contact_prenom,
+            telephone: req.body.contact_telephone,
+            email: req.body.contact_email,
+            linkedin: req.body.contact_linkedin
+        },
+        contactSecondaire: {
+            titre: req.body.contactSecondaire_titre,
+            nom: req.body.contactSecondaire_nom,
+            prenom: req.body.contactSecondaire_prenom,
+            telephone: req.body.contactSecondaire_telephone,
+            email: req.body.contactSecondaire_email,
+            linkedin: req.body.contactSecondaire_linkedin
+        }
+    });
     try {
         await adherent.save();
         res.send(adherent)
