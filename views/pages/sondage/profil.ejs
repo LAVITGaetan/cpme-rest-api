@@ -2,15 +2,32 @@
     <%- include('../includes/navbar.ejs') %>
 
 
-<h5><%= sondage.titre %></h5>
-<h5><%= sondage.nom %></h5>
-<h5><%= sondage.parution %></h5>
-<% questions.forEach(question => { %>
- <div><%= question.order %></div>
-<% }) %>
-<a href="/edit-sondage?id=<%= sondage._id %>">Editer le formulaire</a>
-            </body>
+        <div class="profil">
+            <div class="container">
+                <div class="container-header">
+                    <%= sondage.nom %>
+                </div>
+                <div class="container-row"><span class="row-label">Titre du sondage : </span>
+                    <%= sondage.titre %>
+                </div>
+                <div class="container-row"><span class="row-label">Nombre de réponses</span>
+                    0
+                </div>
+                <div class="container-row"><span class="row-label">Parution</span>
+                    <%= sondage.parution %>
+                </div>
+                <div class="flex">
+                    <div class="container-action"><a href="/edit-sondage?id=<%= sondage._id %>"
+                            class="container-cta no-decoration">Editer le formulaire</a></div>
+                    <div class="container-delete">
+                        <div class="container-ctd">Supprimer</div>
+                    </div>
+                </div>
 
-            <script src="/js/index.js"></script>
+            </div>
+        </div>
+        </body>
 
-            </html>
+        <script src="/js/index.js"></script>
+
+        </html>

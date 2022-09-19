@@ -3,45 +3,18 @@
         <div class="layout">
             <div class="layout-content">
                 <div class="profil">
-                    <div class="profil-card">
-                        <div class="profil-card-figure">
-                            <% if (adherent.logo !=='' ) { %>
-                                <img class="profil-image" width="128px" height="128px"
-                                    src="upload/<%= adherent.logo %>" alt="" class="profil-logo">
-                                <% } else { %>
-                                    <img class="profil-image" width="48px" height="48px" src="img/add-photo.png" alt=""
-                                        class="profil-logo">
-                                    <% } %>
-                        </div>
-
-                        <h3 class="profil-card-title">
-                            <%= adherent.entreprise %>
-                        </h3>
-                        <p class="profil-card-subtitle">
-                            <%= adherent.section %>
-                        </p>
-                        <!-- Supprimer un adhérent -->
-                        <div onclick="deleteAdherent('<%= adherent._id %>')" class="profil-card-delete">
-                            <img src="img/delete.png" width="12px" height="12px" alt="Supprimer">
-                        </div>
-                    </div>
-                    <div class="profil-card">
-                        <div class="profil-card-header">Identifiants de connexion</div>
-                        <div class="profil-card-row"><img width="16px" height="16px" src="img/email.png">
-                            <p class="profil-card-label">
-                                <%= adherent.email %>
-                            </p>
-                        </div>
-                        <div class="profil-card-row"><img width="16px" height="16px" src="img/password.png">
-                            <p class="profil-card-label">
-                                <%= adherent.identifiant %>
-                            </p>
-                        </div>
-                    </div>
 
                     <div class="container">
                         <div class="container-header">Informations générales</div>
 
+                        <div class="container-row"><span class="row-label">Raison Sociale :
+                            </span>
+                            <%= adherent.entreprise %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Section :
+                            </span>
+                            <%= adherent.section %>
+                        </div>
                         <div class="container-row"><span class="row-label">Activité :
                             </span>
                             <%= adherent.activite %>
@@ -67,9 +40,15 @@
                             <%= adherent.siteweb %>
                         </div>
                         <!-- Modifier un adhérent -->
+                        <div class="flex">
+                            <a href="/edit-adherent?id=<%= adherent._id %>" class="container-action no-decoration">
+                                <div class="container-cta">Modifier</div>
+                            </a>
+                            <div onclick="deleteAdherent('<%= adherent._id %>')" class="container-delete">
+                                <div class="container-ctd">Supprimer</div>
+                            </div>
+                        </div>
 
-                        <div class="container-action"><a href="/edit-adherent?id=<%= adherent._id %>"
-                                class="container-cta">Modifier</div></a>
                     </div>
 
                     <div class="container">
@@ -107,27 +86,45 @@
                                         </span>
                                         <%= adherent.parution==1 ? 'activée' : 'desactivée' %>
                                     </div>
+                                    <div class="flex">
+                                        <div class="container-action"><a href="/edit-contact?id=<%= adherent._id %>"
+                                                class="container-cta">Modifier</div></a>
+                                        <% if (adherent.parution) { %>
+                                            <div onclick="disableParution('<%= adherent._id %>')"
+                                                class="container-delete">
+                                                <div class="container-ctd">Désactiver</div>
+                                            </div>
+                                            <% }else {%>
+                                                <div onclick="enableParution('<%= adherent._id %>')"
+                                                    class="container-delete">
+                                                    <div class="container-ctd">Activer</div>
+                                                </div>
+                                                <%} %>
 
-                                    <div class="container-action"><a href="/edit-contact?id=<%= adherent._id %>"
-                                            class="container-cta">Modifier</div></a>
+                                    </div>
+
                     </div>
-                    <% if (adherent.status==0) { %>
-                        <div onclick="enableAdherent('<%= adherent._id %>')" class="profil-cta">Activer l'
-                            adhérent</div>
 
-                        <% }else {%>
-                            <div onclick="disableAdherent('<%= adherent._id %>')" class="profil-ctd">Désactiver l'
-                                adhérent</div>
-                            <%} %>
+                    <div class="profil-settings">
+                        <div class="container-row"><span class="row-label">Adresse de connexion :
+                        </span>
+                        <%= adherent.email %>
+                    </div>
+                    <div class="container-row"><span class="row-label">Mot de passe :
+                        </span>
+                        <%= adherent.identifiant %>
+                    </div>
+                        <% if (adherent.status==0) { %>
+                                <div onclick="enableAdherent('<%= adherent._id %>')" class="container-action">
+                                    <div class="container-cta">Activer l' adhérent</div>
+                                </div>
+                            <% }else {%>
+                                    <div onclick="disableAdherent('<%= adherent._id %>')" class="container-delete">
+                                        <div class="container-ctd">Désactiver l' adhérent</div>
+                                    </div>
+                                <%} %>
+                    </div>
 
-                                <% if (adherent.parution) { %>
-                                    <div class="profil-ctd" onclick="disableParution('<%= adherent._id %>')">
-                                        Désactiver la parution</div>
-                                    <% }else {%>
-                                        <div class="profil-cta" onclick="enableParution('<%= adherent._id %>')">
-                                            Activer la
-                                            parution</div>
-                                        <%} %>
                 </div>
 
 
@@ -139,7 +136,7 @@
             <script>
                 function enableAdherent(id) {
                     if (confirm('Voulez-vous vraiment activer cette adhérent ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/status/${id}/true`, {
+                        fetch(`http://localhost:9999/api/adherents/status/${id}/true`, {
                             method: "PATCH",
                             headers: {
                                 'Content-type': 'application/json'
@@ -152,7 +149,7 @@
                 }
                 function disableAdherent(id) {
                     if (confirm('Voulez-vous vraiment désactiver cette adhérent ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/status/${id}/false`, {
+                        fetch(`http://localhost:9999/api/adherents/status/${id}/false`, {
                             method: "PATCH",
                             headers: {
                                 'Content-type': 'application/json'
@@ -165,7 +162,7 @@
                 }
                 function enableParution(id) {
                     if (confirm('Voulez-vous vraiment activer cette Parution ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/parution/${id}/true`, {
+                        fetch(`http://localhost:9999/api/adherents/parution/${id}/true`, {
                             method: "PATCH",
                             headers: {
                                 'Content-type': 'application/json'
@@ -178,7 +175,7 @@
                 }
                 function disableParution(id) {
                     if (confirm('Voulez-vous vraiment désactiver cette Parution ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/parution/${id}/false`, {
+                        fetch(`http://localhost:9999/api/adherents/parution/${id}/false`, {
                             method: "PATCH",
                             headers: {
                                 'Content-type': 'application/json'
@@ -192,7 +189,7 @@
 
                 function deleteAdherent(id) {
                     if (confirm('Voulez-vous vraiment supprimer cette adhérent ?')) {
-                        fetch(`http://cpmereunion.herokuapp.com/api/adherents/${id}`, {
+                        fetch(`http://localhost:9999/api/adherents/${id}`, {
                             method: "DELETE",
                             headers: {
                                 'Content-type': 'application/json'
@@ -200,8 +197,8 @@
                         })
                         alert('Adhérent supprimé')
                         setTimeout(() => {
-                        document.location.assign('/adherents');
-                            
+                            document.location.assign('/adherents');
+
                         }, 500);
                     }
                 }

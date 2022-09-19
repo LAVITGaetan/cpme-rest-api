@@ -3,52 +3,51 @@
         <div class="layout">
             <div class="layout-content">
                 <div class="profil">
-                    <div class="profil-card">
-                        <div class="profil-card-figure">
-                            <% if (mandataire.logo !=='' ) { %>
-                                <img class="profil-image" width="128px" height="128px"
-                                    src="upload/<%= mandataire.logo %>" alt="" class="profil-logo">
-                                <% } else { %>
-                                    <img class="profil-image" width="48px" height="48px" src="img/add-photo.png" alt=""
-                                        class="profil-logo">
-                                    <% } %>
-                        </div>
-
-                        <h3 class="profil-card-title">
-                            <%= mandataire.nom %>
-                            <%= mandataire.prenom %>
-                        </h3>
-                        <p class="profil-card-subtitle">
-                            Mandats count
-                        </p>
-
-                        <!-- Supprimer un mandataire -->
-                        <div onclick="deleteMandat('<%= mandataire._id %>')" class="profil-card-delete">
-                            <img src="img/delete.png" width="12px" height="12px" alt="Supprimer">
-                        </div>
-                    </div>
-                    <div class="profil-card">
-
-
-                    </div>
-
                     <div class="container">
                         <div class="container-header">Informations générales</div>
-                        <div class="container-row"><span class="row-label">Description :
-                            </span>
-                            <%= mandataire.description %>
-                        </div>
+                        <% if (mandataire.logo !=='' ) { %>
+                            <img style="margin: 0 0 1em 5%;" class="profil-image" width="128px" height="128px"
+                                src="upload/<%= mandataire.logo %>" alt="" class="profil-logo">
+                            <% } else { %>
+                                <img style="margin-left: 5%;" class="profil-image" width="48px" height="48px"
+                                    src="img/add-photo.png" alt="" class="profil-logo">
+                                <% } %>
+                                    <div class="container-row"><span class="row-label">Nom :
+                                        </span>
+                                        <%= mandataire.nom %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Prénom :
+                                        </span>
+                                        <%= mandataire.prenom %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Nombre de mandats :
+                                        </span>
+                                        <%= representations.filter(el=> el.id_mandataire === mandataire._id).length %>
+                                            Mandats
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Description :
+                                        </span>
+                                        <%= mandataire.description %>
+                                    </div>
+                                    <!-- Modifier un mandataire -->
+                                    <div class="flex">
+                                        <a href="/edit-mandataire?id=<%= mandataire._id %>"
+                                            class="container-action no-decoration">
+                                            <div class="container-cta">Modifier</div>
+                                        </a>
+                                        <div onclick="deleteMandataire('<%= mandataire._id %>')"
+                                            class="container-delete">
+                                            <div class="container-ctd">Supprimer</div>
+                                        </div>
+                                    </div>
 
-                        <!-- Modifier un mandataire -->
-
-                        <div class="container-action"><a href="/edit-mandataire?id=<%= mandataire._id %>"
-                                class="container-cta">Modifier</div></a>
                     </div>
 
                     <div class="container">
                         <div class="container-header">Liste des mandats associés</div>
                         <% if (representations.filter(el=> el.id_mandataire === mandataire._id).length > 0) { %>
-                            <% representations.filter(el=> el.id_mandataire === mandataire._id).forEach(representation=> { %>
+                            <% representations.filter(el=> el.id_mandataire === mandataire._id).forEach(representation=>
+                                { %>
                                 <div class="card-representation">
                                     <div class="card-representation-title">
                                         <%= mandats.find(el=> el._id === representation.id_mandat).label %>
@@ -64,11 +63,11 @@
 
                                 <% }) %>
                                     <% } %>
-                                        <div class="card-representation">
+                                        <div class="card-representation-add">
                                             <div class="card-representation-title">Lier un nouveau
                                                 mandat</div>
                                             <form onsubmit="newRepresentation(event, '<%= mandataire._id %>')">
-                                                <select name="mandat" id="mandat">
+                                                <select class="card-representation-input" name="mandat" id="mandat">
                                                     <option value="">Sélectionner un mandataire</option>
                                                     <% mandats.forEach(mandat=> { %>
                                                         <option value="<%= mandat._id %>">
@@ -78,7 +77,7 @@
                                                 </select>
                                                 <input class="card-representation-input" type="text" placeholder="Rôle"
                                                     id="titre">
-                                                <input type="submit" class="card-representation-submit"
+                                                <input type="submit" class="card-representation-cta"
                                                     value="Assigner un mandat">
                                             </form>
                                         </div>
@@ -89,7 +88,7 @@
 
 
             </div>
-
+            </div>
             </body>
             <script>
                 function newRepresentation(event, id) {
@@ -121,7 +120,7 @@
 
                 }
 
-                function deleteMandat(id) {
+                function deleteMandataire(id) {
                     if (confirm('Voulez-vous vraiment supprimer cette mandataire ?')) {
                         fetch(`http://localhost:9999/api/mandataires/${id}`, {
                             method: "DELETE",
@@ -129,10 +128,15 @@
                                 'Content-type': 'application/json'
                             }
                         })
-                        alert('Adhérent supprimé')
+                        fetch(`http://localhost:9999/api/representations/${id}/mandataires`, {
+                            method: "DELETE",
+                            headers: {
+                                'Content-type': 'application/json'
+                            }
+                        })
+                        alert('Mandataire supprimé')
                         setTimeout(() => {
-                        document.location.assign('/mandataires');
-                            
+                            document.location.assign('/mandataires');
                         }, 500);
                     }
                 }

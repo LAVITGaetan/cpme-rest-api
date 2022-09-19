@@ -7,7 +7,7 @@
 <h1 class="header-title">Liste des sondages</h1>
             <div class="flex-between">
                 <div class="searchbox">
-                    <input class="searchbox-input" type="text" placeholder="Recherche" onkeyup="searchAdherent()"
+                    <input class="searchbox-input" type="text" placeholder="Recherche" onkeyup="searchSondage()"
                         id="search"></input>
                     <div onclick="searchSondage()" class="searchbox-action"><img width="20px" height="20px"
                             src="/img/search.png" alt="search"></div>
@@ -30,7 +30,7 @@
                         <a href="/profil-sondage?id=<%= sondage._id %>" class="no-decoration card-edit">
                             <img src="img/edit.png" width="12px" height="12px" alt="edit">
                         </a>
-                        <div class="card-delete" onclick="deleteAdherent('<%= sondage._id %>')">
+                        <div class="card-delete" onclick="deleteSondage('<%= sondage._id %>')">
                             <img src="img/delete.png" width="12px" height="12px" alt="delete">
                         </div>
                     </div>
@@ -46,10 +46,17 @@
             modal.style.display = "none";
         }
 
-        function deleteAdherent(id) {
+        function deleteSondage(id) {
             if (confirm('Voulez-vous vraiment supprimer cette adhérent ?')) {
                 console.log(id);
                 fetch(`http://localhost:9999/api/sondages/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                })
+
+                fetch(`http://localhost:9999/api/sondages/${id}/questions`, {
                     method: "DELETE",
                     headers: {
                         'Content-type': 'application/json'
@@ -65,10 +72,10 @@
         function changeFilter(id) {
             document.getElementsByClassName('filter-selected')[0].classList.remove('filter-selected');
             document.getElementsByClassName('filter-item')[id].classList.add('filter-selected');
-            searchAdherent();
+            searchSondage();
         }
 
-        function searchAdherent() {
+        function searchSondage() {
             let query = document.getElementById('search').value.toLowerCase();
             let item = document.getElementsByClassName('sondage');
             let length = item.length;

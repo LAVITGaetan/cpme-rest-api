@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-// Retrieve one sondage
+// Retrieve questions from one sondage
 router.get('/:id/questions', async (req, res) => {
     try {
         const questions = await Question.find().sort({ order: 1});
@@ -64,6 +64,17 @@ router.delete('/:id', async (req, res) => {
         res.status(200).send({ message: 'Sondage supprimé' })
     } catch (error) {
         res.send({ message: error.message })
+    }
+})
+
+// Delete questions from one sondage
+router.delete('/:id/questions', async (req, res) => {
+    try {
+        await Question.deleteMany({form_id: req.params.id});
+        res.send('Questions liées au sondage supprimées')
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
     }
 })
 module.exports = router;

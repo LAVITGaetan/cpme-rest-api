@@ -10,7 +10,8 @@
                         <h2 class="editor-title" contenteditable id="js-title">
                             <%= sondage.titre %>
                         </h2>
-                        <div class="editor-save" onclick="saveForm()">Sauvegarder le formulaire</div>
+                        <div class="editor-save" onclick="saveForm('<%= sondage._id %>')">Sauvegarder le formulaire
+                        </div>
                         <% questions.forEach(question=> { %>
                             <div class="editor-question" style="order:<%= question.order %>"
                                 id="js-container<%= question.order %>">
@@ -46,6 +47,7 @@
                                                                 placeholder="Réponse">
                                                             <% break; case 'section' : %>
                                                                 <select class="question-select">
+                                                                    <option value="">Sélectionner une section</option>
                                                                     <option class="select-option" value="artisanat">
                                                                         artisanat</option>
                                                                     <option class="select-option" value="commerce">
@@ -59,6 +61,7 @@
                                                                 </select>
                                                                 <% break; case 'salaries' : %>
                                                                     <select class="question-select">
+                                                                        <option value="">Sélectionner un nombre</option>
                                                                         <option class="select-option" value="0 à 5">0 à
                                                                             5
                                                                             salariés</option>
@@ -113,46 +116,71 @@
     <script src="js/form.js"></script>
     <script src="js/index.js"></script>
     <script>
+        formArray = [];
+        counter = <%= questions.length %>
+        <% questions.forEach(question => { %>
+            formArray.push({
+                id: <%= question.order %>,
+                label: "<%= question.label %>",
+                required:  <%= question.required %>,
+                description: {
+                    set:  <%= question.description.set %>,
+                    content: "<%= question.description.content %>"
+                },
+                type: "<%= question.type %>",
+                order:  <%= question.order %>,
+                form_id: "<%= question.form_id %>",
+                _id: "<%= question._id %>",
+            });
+ <% }) %>
 
-        function saveForm() {
+            function saveForm(id) {
 
-            let sondage = {
-                nom: 'Formulaire de qualité',
-                titre: document.getElementById('js-title').innerHTML,
-                parution: false
-            }
-            let questions = formArray
-
-            try {
-                fetch(`http://localhost:9999/api/sondages`, {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    method: "POST",
-                    body: JSON.stringify(sondage)
-                })
-                    .then((response) => response.json())
-                    .then((response) => {
-
-                        for (let i = 0; i < questions.length; i++) {
-                            questions[i].form_id = response._id;
-                            questions[i].label = document.getElementsByClassName('question-label')[i].innerHTML;
-                            fetch(`http://localhost:9999/api/questions`, {
-                                headers: {
-                                    'Content-type': 'application/json'
-                                },
-                                method: "POST",
-                                body: JSON.stringify(questions[i])
-                            })
-                        }
+                let sondage = {
+                    nom: 'Formulaire modifié de qualité',
+                    titre: document.getElementById('js-title').innerHTML,
+                    parution: false
+                }
+                let questions = formArray.filter(el => el.new);
+                let newQuestions = formArray.filter(el => el.new == false);
+                try {
+                    fetch(`http://localhost:9999/api/sondages/${id}`, {
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        method: "PATCH",
+                        body: JSON.stringify(sondage)
                     })
-
-
-
-            } catch (error) {
-                console.log(error);
+                        .then((response) => response.json())
+                        .then((response) => {
+                            // for (let i = 0; i < questions.length; i++) {
+                            //     questions[i].form_id = response._id;
+                            //     questions[i].label = document.getElementsByClassName('question-label')[i].innerHTML;
+                            //     fetch(`http://localhost:9999/api/questions/${questions[i]._id}`, {
+                            //         headers: {
+                            //             'Content-type': 'application/json'
+                            //         },
+                            //         method: "PATCH",
+                            //         body: JSON.stringify(questions[i])
+                            //     })
+                            // }
+                            // for (let i = 0; i < newQuestions.length; i++) {
+                            //     newQuestions[i].form_id = response._id;
+                            //     newQuestions[i].label = document.getElementsByClassName('question-label')[i].innerHTML;
+                            //     fetch(`http://localhost:9999/api/questions`, {
+                            //         headers: {
+                            //             'Content-type': 'application/json'
+                            //         },
+                            //         method: "POST",
+                            //         body: JSON.stringify(newQuestions[i])
+                            //     })
+                            // }
+                            console.log(response);
+                        })
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
     </script>
 
     </html>

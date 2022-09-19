@@ -3,36 +3,16 @@
         <div class="layout">
             <div class="layout-content">
                 <div class="profil">
-                    <div class="profil-card">
-                        <div class="profil-card-figure">
-                            <% if (mandat.logo !=='' ) { %>
-                                <img class="profil-image" width="128px" height="128px" src="upload/<%= mandat.logo %>"
-                                    alt="" class="profil-logo">
-                                <% } else { %>
-                                    <img class="profil-image" width="48px" height="48px" src="img/add-photo.png" alt=""
-                                        class="profil-logo">
-                                    <% } %>
-                        </div>
-
-                        <h3 class="profil-card-title">
-                            <%= mandat.label %>
-                        </h3>
-                        <p class="profil-card-subtitle">
-                            <%= mandat.categorie %>
-                        </p>
-
-                        <!-- Supprimer un mandat -->
-                        <div onclick="deleteMandataire('<%= mandat._id %>')" class="profil-card-delete">
-                            <img src="img/delete.png" width="12px" height="12px" alt="Supprimer">
-                        </div>
-                    </div>
-                    <div class="profil-card">
-
-                    </div>
-
                     <div class="container">
                         <div class="container-header">Informations générales</div>
-
+                        <div class="container-row"><span class="row-label">Label :
+                            </span>
+                            <%= mandat.label %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Catégorie :
+                            </span>
+                            <%= mandat.categorie %>
+                        </div>
                         <div class="container-row"><span class="row-label">Nom :
                             </span>
                             <%= mandat.nom %>
@@ -53,8 +33,14 @@
                         </div>
 
                         <!-- Modifier un mandat -->
-                        <div class="container-action"><a href="/edit-mandat?id=<%= mandat._id %>"
-                                class="container-cta">Modifier</div></a>
+                        <div class="flex">
+                            <div class="container-action"><a href="/edit-mandat?id=<%= mandat._id %>"
+                                    class="container-cta">Modifier</div></a>
+                            <div onclick="deleteMandat('<%= mandat._id %>')" class="container-delete">
+                                <div class="container-ctd">Supprimer</div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="container">
@@ -77,21 +63,23 @@
 
                                 <% }) %>
                                     <% } %>
-                                        <div class="card-representation">
+                                        <div class="card-representation-add">
                                             <div class="card-representation-title">Lier un nouveau
                                                 mandataire</div>
                                             <form onsubmit="newRepresentation(event, '<%= mandat._id %>')">
-                                                <select name="mandataire" id="mandataire">
+                                                <select class="card-representation-input" name="mandataire"
+                                                    id="mandataire">
                                                     <option value="">Sélectionner un mandataire</option>
                                                     <% mandataires.forEach(mandataire=> { %>
                                                         <option value="<%= mandataire._id %>">
                                                             <%= mandataire.prenom %>
+                                                                <%= mandataire.nom %>
                                                         </option>
                                                         <% }) %>
                                                 </select>
                                                 <input class="card-representation-input" type="text" placeholder="Rôle"
                                                     id="titre">
-                                                <input type="submit" class="card-representation-submit"
+                                                <input type="submit" class="card-representation-cta"
                                                     value="Assigner un mandataire">
                                             </form>
                                         </div>
@@ -150,7 +138,7 @@
                     }
                 }
 
-                function deleteMandataire(id) {
+                function deleteMandat(id) {
                     if (confirm('Voulez-vous vraiment supprimer cette mandat ?')) {
                         fetch(`http://localhost:9999/api/mandats/${id}`, {
                             method: "DELETE",
@@ -158,7 +146,13 @@
                                 'Content-type': 'application/json'
                             }
                         })
-                        alert('Adhérent supprimé')
+                        fetch(`http://localhost:9999/api/representations/${id}/mandats`, {
+                            method: "DELETE",
+                            headers: {
+                                'Content-type': 'application/json'
+                            }
+                        })
+                        alert('Mandat supprimé')
                         setTimeout(() => {
                             document.location.assign('/mandats');
 

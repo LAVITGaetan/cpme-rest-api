@@ -30,7 +30,7 @@
                             <%= mandataire.prenom %>
                         </div>
                         <div class="card-subtitle">
-                            Count mandats
+                            <%= representations.filter(el => el.id_mandataire === mandataire._id).length %> Mandats
                         </div>
                         <a href="/profil-mandataire?id=<%= mandataire._id %>" class="no-decoration card-edit">
                             <img src="img/edit.png" width="12px" height="12px" alt="edit">

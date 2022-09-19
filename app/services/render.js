@@ -103,7 +103,8 @@ exports.editMandat = async (req, res) => {
 exports.getMandataires = async (req, res) => {
     try {
         let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires`)
-        res.render('pages/mandataire/liste', { title: 'Liste des mandataires', mandataires: fetch.data })
+        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
+        res.render('pages/mandataire/liste', { title: 'Liste des mandataires', mandataires: fetch.data, representations: fetch_representations.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);
