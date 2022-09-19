@@ -76,10 +76,26 @@ router.post('/', upload.single('mandatLogo'), async (req, res) => {
 
 
 // Update mandat
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', upload.single('mandatLogo'), async (req, res) => {
+    if (req.file) {
+        path = req.file.path.substring(7)
+    }
+    else {
+        path = req.body.logo || 'none'
+    }
+    const mandat = {
+        label: req.body.label,
+        nom: req.body.nom,
+        categorie: req.body.categorie,
+        mission: req.body.mission,
+        composition: req.body.composition,
+        duree: req.body.duree,
+        renouvellement: req.body.renouvellement,
+        logo: path
+    };
     try {
-        const mandat = await Mandat.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.send({ mandat })
+        const updatedMandat = await Mandat.findByIdAndUpdate(req.params.id, mandat, { new: true });
+        res.send({ updatedMandat })
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
