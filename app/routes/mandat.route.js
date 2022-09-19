@@ -2,6 +2,32 @@ const express = require('express')
 const router = express.Router();
 const Mandat = require('../models/mandat.model');
 
+// MULTER Settings
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, `logo_${req.body.label}_${file.originalname}`)
+    }
+})
+const fileFilter = function (req, file, cb) {
+
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true)
+    }
+    else {
+        cb(null, false)
+    }
+}
+const upload = multer({
+    storage: storage, limits: {
+        fileSize: 1024 * 1024 * 5,
+    },
+    fileFilter: fileFilter
+});
+
 // Retrieve all mandats
 router.get('/', async (req, res) => {
     try {
@@ -23,8 +49,23 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add mandat
-router.post('/', async (req, res) => {
-    const mandat = new Mandat(req.body);
+router.post('/', upload.single('mandatLogo'), async (req, res) => {
+    if (req.file) {
+        path = req.file.path.substring(7)
+    }
+    else {
+        path = req.body.logo || 'none'
+    }
+    const mandat = new Mandat({
+        label: req.body.label,
+        nom: req.body.nom,
+        categorie: req.body.categorie,
+        mission: req.body.mission,
+        composition: req.body.composition,
+        duree: req.body.duree,
+        renouvellement: req.body.renouvellement,
+        logo: path
+    });
     try {
         await mandat.save();
         res.send(mandat)
@@ -32,6 +73,7 @@ router.post('/', async (req, res) => {
         res.status(500).send({ message: error.message })
     }
 })
+
 
 // Update mandat
 router.patch('/:id', async (req, res) => {

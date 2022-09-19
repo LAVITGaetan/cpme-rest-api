@@ -25,6 +25,9 @@ const MandatSchema = new mongoose.Schema({
     renouvellement: {
         type: String,
     },
+    logo: {
+        type: String
+    }
 });
 
 module.exports = new mongoose.model('Mandat', MandatSchema);
