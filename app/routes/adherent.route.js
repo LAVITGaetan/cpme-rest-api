@@ -70,6 +70,20 @@ router.post('/', upload.single('adherentLogo'), async (req, res) => {
         logo: path,
         parution: req.body.parution,
         status: req.body.status,
+        contact : {
+            titre : req.body.contact_titre,
+            nom : req.body.contact_nom,
+            prenom : req.body.contact_prenom,
+            telephone : req.body.contact_telephone,
+            linkedin : req.body.contact_linkedin,
+        },
+        contactSecondaire : {
+            titre : req.body.contactSecondaire_titre,
+            nom : req.body.contactSecondaire_nom,
+            prenom : req.body.contactSecondaire_prenom,
+            telephone : req.body.contactSecondaire_telephone,
+            linkedin : req.body.contactSecondaire_linkedin,
+        }
     });
     try {
         await adherent.save();
@@ -105,6 +119,33 @@ router.patch('/:id', upload.single('adherentLogo'), async (req, res) => {
     try {
         const updatedAdherent = await Adherent.findByIdAndUpdate(req.params.id, adherent, { new: true });
         res.send({ updatedAdherent })
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+    res.send({ message: req.params.id })
+})
+
+// Update contact
+router.patch('/:id/contact', async (req, res) => {
+    const contact = {
+        contact : {
+            titre : req.body.contact_titre,
+            nom : req.body.contact_nom,
+            prenom : req.body.contact_prenom,
+            telephone : req.body.contact_telephone,
+            linkedin : req.body.contact_linkedin,
+        },
+        contactSecondaire : {
+            titre : req.body.contactSecondaire_titre,
+            nom : req.body.contactSecondaire_nom,
+            prenom : req.body.contactSecondaire_prenom,
+            telephone : req.body.contactSecondaire_telephone,
+            linkedin : req.body.contactSecondaire_linkedin,
+        }
+    };
+    try {
+        const updatedContact = await Adherent.findByIdAndUpdate(req.params.id, contact, { new: true });
+        res.send({ updatedContact })
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
