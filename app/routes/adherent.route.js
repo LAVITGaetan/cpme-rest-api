@@ -70,22 +70,6 @@ router.post('/', upload.single('adherentLogo'), async (req, res) => {
         logo: path,
         parution: req.body.parution,
         status: req.body.status,
-        contact: {
-            titre: req.body.contact_titre,
-            nom: req.body.contact_nom,
-            prenom: req.body.contact_prenom,
-            telephone: req.body.contact_telephone,
-            email: req.body.contact_email,
-            linkedin: req.body.contact_linkedin
-        },
-        contactSecondaire: {
-            titre: req.body.contactSecondaire_titre,
-            nom: req.body.contactSecondaire_nom,
-            prenom: req.body.contactSecondaire_prenom,
-            telephone: req.body.contactSecondaire_telephone,
-            email: req.body.contactSecondaire_email,
-            linkedin: req.body.contactSecondaire_linkedin
-        }
     });
     try {
         await adherent.save();
@@ -96,13 +80,35 @@ router.post('/', upload.single('adherentLogo'), async (req, res) => {
 })
 
 // Update adhérent
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', upload.single('adherentLogo'), async (req, res) => {
+    if (req.file) {
+        path = req.file.path.substring(7)
+    }
+    else {
+        path = req.body.logo || 'none'
+    }
+    const adherent = {
+        entreprise: req.body.entreprise,
+        section: req.body.section,
+        adresse: req.body.adresse,
+        activite: req.body.activite,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        email: req.body.email,
+        telephone: req.body.telephone,
+        identifiant: req.body.identifiant,
+        siteweb: req.body.siteweb,
+        logo: path,
+        parution: req.body.parution,
+        status: req.body.status,
+    };
     try {
-        const adherent = await Adherent.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.send({ adherent })
+        const updatedAdherent = await Adherent.findByIdAndUpdate(req.params.id, adherent, { new: true });
+        res.send({ updatedAdherent })
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
+    res.send({ message: req.params.id })
 })
 
 // Delete adhérent
