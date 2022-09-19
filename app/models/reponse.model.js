@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 const ReponseSchema = new mongoose.Schema({
     value: {
         type: String,
-        required: true,
+        required: true
     },  
+    reponse_id: {
+        type: String,
+        required: true
+    }
 });
 
 module.exports = new mongoose.model('Reponse', ReponseSchema);

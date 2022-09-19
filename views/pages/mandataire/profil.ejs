@@ -7,7 +7,7 @@
                         <div class="container-header">Informations générales</div>
                         <% if (mandataire.logo !=='' ) { %>
                             <img style="margin: 0 0 1em 5%;" class="profil-image" width="128px" height="128px"
-                                src="upload/<%= mandataire.logo %>" alt="" class="profil-logo">
+                                src="<%= mandataire.logo %>" alt="" class="profil-logo">
                             <% } else { %>
                                 <img style="margin-left: 5%;" class="profil-image" width="48px" height="48px"
                                     src="img/add-photo.png" alt="" class="profil-logo">
@@ -83,11 +83,6 @@
                                         </div>
                     </div>
                 </div>
-
-
-
-
-            </div>
             </div>
             </body>
             <script>
@@ -118,6 +113,23 @@
                     }
 
 
+                }
+
+                function deleteRepresentation(id) {
+                    if (confirm('Voulez-vous vraiment supprimer cette mandat ?')) {
+                        fetch(`http://localhost:9999/api/representations/${id}`, {
+                            method: "DELETE",
+                            headers: {
+                                'Content-type': 'application/json'
+                            }
+                        })
+                        alert('Représentation supprimée')
+                        setTimeout(() => {
+                            document.location.reload();
+
+                        }, 500);
+
+                    }
                 }
 
                 function deleteMandataire(id) {

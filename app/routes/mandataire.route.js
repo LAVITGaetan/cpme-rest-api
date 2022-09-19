@@ -71,10 +71,22 @@ router.post('/', upload.single('mandataireLogo'), async (req, res) => {
 })
 
 // Update mandataire
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', upload.single('mandataireLogo'), async (req, res) => {
+    if (req.file) {
+        path = req.file.path.substring(7)
+    }
+    else {
+        path = req.body.logo || 'none'
+    }
+    const mandataire = {
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        description: req.body.description,
+        logo: path
+    };
     try {
-        const mandataire = await Mandataire.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.send({ mandataire })
+        const updatedMandataire = await Mandataire.findByIdAndUpdate(req.params.id, mandataire, { new: true });
+        res.send({ updatedMandataire })
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
