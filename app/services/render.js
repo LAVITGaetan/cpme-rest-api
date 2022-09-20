@@ -2,13 +2,17 @@ const axios = require('axios');
 
 // Login
 exports.login = (req, res) => {
-    res.render('pages/login', { title: 'Connexion'})
+    res.render('pages/login', { title: 'Connexion' })
 }
 
 // Index
 exports.index = async (req, res) => {
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`, {
+            headers: {
+                'auth-token': 'azeknjifizbfbf4454845j'
+            }
+        })
         res.render('pages/accueil', { title: 'Accueil', adherents: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -79,7 +83,7 @@ exports.getMandat = async (req, res) => {
         let fetch_mandat = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`)
         let fetch_mandataires = await axios.get(`${process.env.LOCAL_API}/mandataires`)
         let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
-        res.render('pages/mandat/profil', { title: 'Profil mandat', mandat: fetch_mandat.data, mandataires: fetch_mandataires.data, representations: fetch_representations.data  })
+        res.render('pages/mandat/profil', { title: 'Profil mandat', mandat: fetch_mandat.data, mandataires: fetch_mandataires.data, representations: fetch_representations.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);
@@ -117,7 +121,7 @@ exports.getMandataire = async (req, res) => {
         let fetch_mandataire = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`)
         let fetch_mandats = await axios.get(`${process.env.LOCAL_API}/mandats`)
         let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
-        res.render('pages/mandataire/profil', { title: 'Profil mandataire', mandataire: fetch_mandataire.data, mandats: fetch_mandats.data, representations: fetch_representations.data  })
+        res.render('pages/mandataire/profil', { title: 'Profil mandataire', mandataire: fetch_mandataire.data, mandats: fetch_mandats.data, representations: fetch_representations.data })
 
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -143,7 +147,7 @@ exports.editMandataire = async (req, res) => {
 exports.getSondages = async (req, res) => {
     try {
         let fetch = await axios.get(`${process.env.LOCAL_API}/sondages`)
-        res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: fetch.data})
+        res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);
@@ -154,7 +158,7 @@ exports.getSondage = async (req, res) => {
     try {
         let fetch_sondage = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}`)
         let fetch_questions = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/questions`)
-        res.render('pages/sondage/profil', { title: 'Profil sondage', sondage: fetch_sondage.data, questions: fetch_questions})
+        res.render('pages/sondage/profil', { title: 'Profil sondage', sondage: fetch_sondage.data, questions: fetch_questions })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);
@@ -169,7 +173,7 @@ exports.editSondage = async (req, res) => {
     try {
         let fetch_sondage = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}`)
         let fetch_questions = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/questions`)
-        res.render('pages/sondage/edit', { title: 'ProfEditer un sondage', sondage: fetch_sondage.data, questions: fetch_questions.data})
+        res.render('pages/sondage/edit', { title: 'ProfEditer un sondage', sondage: fetch_sondage.data, questions: fetch_questions.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);

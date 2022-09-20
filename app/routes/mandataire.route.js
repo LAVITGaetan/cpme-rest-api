@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Mandataire = require('../models/mandataire.model');
+const verify = require('./verifyToken')
 
 // MULTER Settings
 const multer = require('multer');
@@ -49,7 +50,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add mandataire
-router.post('/', upload.single('mandataireLogo'), async (req, res) => {
+router.post('/', verify, upload.single('mandataireLogo'), async (req, res) => {
     if (req.file) {
         path = req.file.path.substring(7)
     }

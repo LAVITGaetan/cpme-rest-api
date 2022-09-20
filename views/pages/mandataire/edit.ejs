@@ -6,7 +6,8 @@
             <div class="content">
                 <h1 class="title">Modifier un adhérent</h1>
                 <div class="form-container">
-                    <form onsubmit="editMandataire(event)" id="add-form" class="form-flex" enctype="multipart/form-data" method="POST">
+                    <form data-ressource="mandataires/<%=mandataire._id%>" onsubmit="patchForm(event)" id="add-form"
+                        class="form-flex" enctype="multipart/form-data" method="POST">
                         <div class="form-group">
                             <label for="logo" class="form-label">Image</label>
                             <% if (mandataire.logo !=='' ) { %>
@@ -16,9 +17,9 @@
                                     <img style="margin-left: 5%;" class="profil-image" width="48px" height="48px"
                                         src="img/add-photo.png" alt="" class="profil-logo">
                                     <% } %>
-                            <input type="file" name="mandataireLogo">
-                            <input value="<%= mandataire.logo %>" required name="logo" id="logo"
-                                type="text" class="form-input" placeholder="Réponse">
+                                        <input type="file" name="mandataireLogo">
+                                        <input value="<%= mandataire.logo %>" required name="logo" id="logo" type="text"
+                                            class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="nom" class="form-label">Nom</label>
@@ -32,8 +33,8 @@
                         </div>
                         <div class="form-group">
                             <label for="description" class="form-label">Description</label>
-                            <input value="<%= mandataire.description %>" id="description" required type="text" name="description"
-                                class="form-input" placeholder="Réponse">
+                            <input value="<%= mandataire.description %>" id="description" required type="text"
+                                name="description" class="form-input" placeholder="Réponse">
                         </div>
                         <input type="hidden" name="id" id="id" value="<%= mandataire._id%>">
                         <div class="form-action">
@@ -44,24 +45,7 @@
             </div>
 
     </body>
-    <script>
-        function editMandataire(event) {
-            event.preventDefault();
-            let data = new FormData(document.getElementById('add-form'))
-            try {
-                fetch(`http://localhost:9999/api/mandataires/<%=mandataire._id%>`, {
-                    method: 'PATCH',
-                    body: data
-                })
-                .then(response => response.json())
-                .then((response) => {
-                    console.log(response);
-                })
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
-    </script>
+    <script src="js/api.js"></script>
     <script src="/js/index.js"></script>
 
     </html>

@@ -6,10 +6,12 @@ const jwt = require('jsonwebtoken');
 const verify = require('./verifyToken')
 
 // Get all users
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
+    let token = req.header('auth-token') || req.cookies('token');
+    console.log('here');
     try {
         const users = await User.find();
-        res.send(users)
+        res.header('auth-token', token).send(users)
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
@@ -29,8 +31,8 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
 
     // Check if email is already existing
-    const emailExist = await User.findOne({email : req.body.email})
-    if(emailExist) {
+    const emailExist = await User.findOne({ email: req.body.email })
+    if (emailExist) {
         res.send('Un compte avec cette adresse e-mail éxiste déjà')
     }
 
@@ -48,7 +50,7 @@ router.post('/', async (req, res) => {
     });
     try {
         await user.save();
-        res.send({user : user._id})
+        res.send({ user: user._id })
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
@@ -56,20 +58,22 @@ router.post('/', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
-        // Check if email exist
-        const user = await User.findOne({email : req.body.email})
-        if(!user) {
-            res.send({message: 'Identifiant incorrect'})
-        }
+    // Check if email exist
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+        res.send({ message: 'Identifiant incorrect' })
+    }
 
-        // Check if passwords match
-        const validPassword = await bcrypt.compare(req.body.identifiant, user.identifiant)
-        if(!validPassword) return res.send({message: 'Mot de passe incorrect'})
+    // Check if passwords match
+    const validPassword = await bcrypt.compare(req.body.identifiant, user.identifiant)
+    if (!validPassword) return res.send({ message: 'Mot de passe incorrect' })
 
-        // Set token
-        const token = jwt.sign({_id: user._id, role: user.role}, process.env.SECRET_TOKEN, {expiresIn: "1h"});
-        user.token = token;
-        res.send(user)
+    // Set token
+    const secret_token = process.env.SECRET_TOKEN;
+    const expirationSeconds = 3600;
+    const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "1h" });
+    res.cookie("token", token, { maxAge: expirationSeconds * 1000})
+    res.header('auth-token', token).send({ token: token })
 })
 
 // Update user

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Adherent = require('../models/adherent.model');
+const verify = require('./verifyToken')
 
 // MULTER Settings
 const multer = require('multer');
