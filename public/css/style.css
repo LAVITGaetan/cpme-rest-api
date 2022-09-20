@@ -16,6 +16,10 @@ body {
   --clrLight: #f0fbfb;
 }
 
+.bold {
+  font-weight: 700;
+}
+
 .title {
   font-size: 25px;
   font-weight: 800;
@@ -95,6 +99,12 @@ body {
   width: 100%;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.container-contact {
+  width: 100%;
+  margin-bottom: 1.1em;
+  border-bottom: 3px solid #00c4cc20;
 }
 
 /* Card */
@@ -694,6 +704,7 @@ body {
 
 .profil-settings {
   width: 100%;
+  background-color: #ffffff;
   border: 3px solid #00c4cc50;
   margin: 2em 3.3%;
   padding-top: 2em;

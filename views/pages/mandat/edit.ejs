@@ -9,7 +9,7 @@
                     <form onsubmit="editMandat(event)" id="add-form" class="form-flex" enctype="multipart/form-data"
                         method="POST">
                         <div class="form-group">
-                            <label for="label" class="form-label">Label</label>
+                            <label for="label" class="form-label">Logo</label>
                             <% if (mandat.logo !=='' ) { %>
                                 <img style="margin: 0 0 1em 5%;" class="profil-image" width="128px" height="128px"
                                     src="<%= mandat.logo %>" alt="" class="profil-logo">
@@ -20,6 +20,11 @@
                                         <input type="file" name="mandatLogo">
                             <input value="<%= mandat.logo %>" required name="logo" id="logo"
                                 type="text" class="form-input" placeholder="Réponse">
+                        </div>
+                        <div class="form-group">
+                            <label for="label" class="form-label">Label</label>
+                            <input value="<%= mandat.label %>" id="label" required type="text" name="label"
+                                class="form-input" placeholder="Réponse">
                         </div>
                         <div class="form-group">
                             <label for="categorie" class="form-label">Catégorie</label>

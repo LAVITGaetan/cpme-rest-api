@@ -13,121 +13,185 @@
                                 <img style="margin-left: 5%;" class="profil-image" width="48px" height="48px"
                                     src="img/add-photo.png" alt="" class="profil-logo">
                                 <% } %>
-                        <div class="container-row"><span class="row-label">Raison Sociale :
-                            </span>
-                            <%= adherent.entreprise %>
-                        </div>
-                        <div class="container-row"><span class="row-label">Section :
-                            </span>
-                            <%= adherent.section %>
-                        </div>
-                        <div class="container-row"><span class="row-label">Activité :
-                            </span>
-                            <%= adherent.activite %>
-                        </div>
-                        <div class="container-row"><span class="row-label">Adresse : </span>
-                            <%= adherent.adresse %>
-                        </div>
-                        <div class="container-row"><span class="row-label">Représentant :
-                            </span>
-                            <%= adherent.prenom %>
-                                <%= adherent.nom %>
-                        </div>
-                        <div class="container-row"><span class="row-label">Email : </span>
-                            <%= adherent.email %>
-                        </div>
-                        <div class="container-row"><span class="row-label">Téléphone :
-                            </span>
-                            <%= adherent.telephone %>
-                        </div>
+                                    <div class="container-row"><span class="row-label">Raison Sociale :
+                                        </span>
+                                        <%= adherent.entreprise %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Section :
+                                        </span>
+                                        <%= adherent.section %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Activité :
+                                        </span>
+                                        <%= adherent.activite %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Adresse : </span>
+                                        <%= adherent.adresse %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Représentant :
+                                        </span>
+                                        <%= adherent.prenom %>
+                                            <%= adherent.nom %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Email : </span>
+                                        <%= adherent.email %>
+                                    </div>
+                                    <div class="container-row"><span class="row-label">Téléphone :
+                                        </span>
+                                        <%= adherent.telephone %>
+                                    </div>
 
-                        <div class="container-row"><span class="row-label">Site web :
-                            </span>
-                            <%= adherent.siteweb %>
-                        </div>
-                        <!-- Modifier un adhérent -->
-                        <div class="flex">
-                            <a href="/edit-adherent?id=<%= adherent._id %>" class="container-action no-decoration">
-                                <div class="container-cta">Modifier</div>
-                            </a>
-                            <div onclick="deleteAdherent('<%= adherent._id %>')" class="container-delete">
-                                <div class="container-ctd">Supprimer</div>
-                            </div>
-                        </div>
+                                    <div class="container-row"><span class="row-label">Site web :
+                                        </span>
+                                        <%= adherent.siteweb %>
+                                    </div>
+                                    <!-- Modifier un adhérent -->
+                                    <div class="flex">
+                                        <a href="/edit-adherent?id=<%= adherent._id %>"
+                                            class="container-action no-decoration">
+                                            <div class="container-cta">Modifier</div>
+                                        </a>
+                                        <div onclick="deleteAdherent('<%= adherent._id %>')" class="container-delete">
+                                            <div class="container-ctd">Supprimer</div>
+                                        </div>
+                                    </div>
 
                     </div>
 
                     <div class="container">
                         <div class="container-header">Parution dans l' annuaire</div>
                         <% if (adherent.contact) { %>
-
-                            <div class="container-row"><span class="row-label">Contact Principal :
+                            <div class="container-row bold">Contact principal</div>
+                            <div class="container-contact">
+                            <%if(adherent.contact.titre) {%>
+                            <div class="container-row"><span class="row-label">Titre :
                                 </span>
                                 <%= adherent.contact.titre %>
                             </div>
+                            <% } %>
+
+                            <%if(adherent.contact.prenom && adherent.contact.nom) {%>
                             <div class="container-row"><span class="row-label">Identité :
                                 </span>
                                 <%= adherent.contact.prenom %>
                                     <%= adherent.contact.nom %>
                             </div>
+                            <% } %>
+
+                            <%if(adherent.contact.email) {%>
                             <div class="container-row"><span class="row-label">Email :
                                     <%= adherent.contact.email %>
                                 </span>
-
                             </div>
+                            <% } %>
+
+                            <%if(adherent.contact.telephone) {%>
                             <div class="container-row"><span class="row-label">Téléphone :
                                 </span>
                                 <%= adherent.contact.telephone %>
                             </div>
+                            <% } %>
 
-                            <div class="container-row"><span class="row-label">LinkedIn :
+                            <%if(adherent.contact.linkedin) {%>
+                                <div class="container-row"><span class="row-label">LinkedIn :
                                 </span>
                                 <%= adherent.contact.linkedin %>
                             </div>
-                            <% } else { %>
-                                <div class="container-row">Aucune informations de contact</div>
-                                <% } %>
-
-                                    <div class="container-row"><span class="row-label">Parution :
+                            <% } %>
+                        </div>
+                            <%if(adherent.contactSecondaire) {%>
+                                <div class="container-row bold">Contact secondaire</div>
+                                <div class="container-contact">
+                                <% if (adherent.contactSecondaire.nom && adherent.contactSecondaire.titre) { %>
+                                    <div class="container-row"><span class="row-label">Titre :
                                         </span>
-                                        <%= adherent.parution==1 ? 'activée' : 'desactivée' %>
+                                        <%= adherent.contactSecondaire.titre %>
                                     </div>
-                                    <div class="flex">
-                                        <div class="container-action"><a href="/edit-contact?id=<%= adherent._id %>"
-                                                class="container-cta">Modifier</div></a>
-                                        <% if (adherent.parution) { %>
-                                            <div onclick="disableParution('<%= adherent._id %>')"
-                                                class="container-delete">
-                                                <div class="container-ctd">Désactiver</div>
+                                    <% } %>
+                                        <% if (adherent.contactSecondaire.nom && adherent.contactSecondaire.prenom) { %>
+                                            <div class="container-row"><span class="row-label">Identité :
+                                                </span>
+                                                <%= adherent.contactSecondaire.prenom %>
+                                                    <%= adherent.contactSecondaire.nom %>
                                             </div>
-                                            <% }else {%>
-                                                <div onclick="enableParution('<%= adherent._id %>')"
-                                                    class="container-delete">
-                                                    <div class="container-ctd">Activer</div>
-                                                </div>
-                                                <%} %>
+                                            <% } %>
+                                                <% if (adherent.contactSecondaire.email) { %>
+                                                    <div class="container-row"><span class="row-label">Email :
+                                                            <%= adherent.contactSecondaire.email %>
+                                                        </span>
 
-                                    </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <% if (adherent.contactSecondaire.telephone) { %>
+                                                            <div class="container-row"><span class="row-label">Téléphone
+                                                                    :
+                                                                </span>
+                                                                <%= adherent.contactSecondaire.telephone %>
+                                                            </div>
+                                                            <% } %>
+                                                                <% if (adherent.contactSecondaire.linkedin) { %>
+                                                                    <div class="container-row"><span
+                                                                            class="row-label">LinkedIn :
+                                                                        </span>
+                                                                        <%= adherent.contactSecondaire.linkedin %>
+                                                                    </div>
+                                                                    <% } %>
+                                                                </div>
+                                                                        <% } %>
+                                                                            <% } else { %>
+                                                                                <div class="container-row">Aucune
+                                                                                    informations de contact</div>
+                                                                                <% } %>
+
+                                                                                    <div class="container-row"><span
+                                                                                            class="row-label">Parution :
+                                                                                        </span>
+                                                                                        <%= adherent.parution==1
+                                                                                            ? 'activée' : 'desactivée'
+                                                                                            %>
+                                                                                    </div>
+                                                                                    <div class="flex">
+                                                                                        <div class="container-action"><a
+                                                                                                href="/edit-contact?id=<%= adherent._id %>"
+                                                                                                class="container-cta">Modifier
+                                                                                        </div></a>
+                                                                                        <% if (adherent.parution) { %>
+                                                                                            <div onclick="disableParution('<%= adherent._id %>')"
+                                                                                                class="container-delete">
+                                                                                                <div
+                                                                                                    class="container-ctd">
+                                                                                                    Désactiver</div>
+                                                                                            </div>
+                                                                                            <% }else {%>
+                                                                                                <div onclick="enableParution('<%= adherent._id %>')"
+                                                                                                    class="container-delete">
+                                                                                                    <div
+                                                                                                        class="container-ctd">
+                                                                                                        Activer</div>
+                                                                                                </div>
+                                                                                                <%} %>
+
+                                                                                    </div>
 
                     </div>
 
                     <div class="profil-settings">
                         <div class="container-row"><span class="row-label">Adresse de connexion :
-                        </span>
-                        <%= adherent.email %>
-                    </div>
-                    <div class="container-row"><span class="row-label">Mot de passe :
-                        </span>
-                        <%= adherent.identifiant %>
-                    </div>
+                            </span>
+                            <%= adherent.email %>
+                        </div>
+                        <div class="container-row"><span class="row-label">Mot de passe :
+                            </span>
+                            <%= adherent.identifiant %>
+                        </div>
                         <% if (adherent.status==0) { %>
-                                <div onclick="enableAdherent('<%= adherent._id %>')" class="container-action">
-                                    <div class="container-cta">Activer l' adhérent</div>
-                                </div>
+                            <div onclick="enableAdherent('<%= adherent._id %>')" class="container-action">
+                                <div class="container-cta">Activer l' adhérent</div>
+                            </div>
                             <% }else {%>
-                                    <div onclick="disableAdherent('<%= adherent._id %>')" class="container-delete">
-                                        <div class="container-ctd">Désactiver l' adhérent</div>
-                                    </div>
+                                <div onclick="disableAdherent('<%= adherent._id %>')" class="container-delete">
+                                    <div class="container-ctd">Désactiver l' adhérent</div>
+                                </div>
                                 <%} %>
                     </div>
 

@@ -55,6 +55,9 @@
                         <% if (representations.filter(el=> el.id_mandat === mandat._id).length > 0) { %>
                             <% representations.filter(el=> el.id_mandat === mandat._id).forEach(representation=> { %>
                                 <div class="card-representation">
+                                    <div class="card-representation-image">
+                                        <img width="64px" height="64px" src="<%=mandataires.find(el => el._id === representation.id_mandataire).logo%>" alt="">
+                                    </div>
                                     <div class="card-representation-title">
                                         <%= mandataires.find(el=> el._id === representation.id_mandataire).prenom %>
                                             <%= mandataires.find(el=> el._id === representation.id_mandataire).nom %>
@@ -104,7 +107,6 @@
                         id_mandat: id,
                         id_mandataire: id_mandataire,
                         titre: document.getElementById('titre').value,
-
                     }
                     try {
                         fetch(`http://localhost:9999/api/representations`, {
@@ -121,8 +123,6 @@
                         console.log(error.message);
                         alert('Seems baddd')
                     }
-
-
                 }
 
                 function deleteRepresentation(id) {
