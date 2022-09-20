@@ -12,6 +12,7 @@ const mandataireRoutes = require('./app/routes/mandataire.route')
 const representationRoutes = require('./app/routes/representation.route')
 const sondageRoutes = require('./app/routes/sondage.route')
 const questionRoutes = require('./app/routes/question.route')
+const reponseRoutes = require('./app/routes/reponse.route')
 const userRoutes = require('./app/routes/user.route')
 
 // middlewares
@@ -36,6 +37,7 @@ app.use('/api/mandataires', mandataireRoutes)
 app.use('/api/representations', representationRoutes)
 app.use('/api/sondages', sondageRoutes)
 app.use('/api/questions', questionRoutes)
+app.use('/api/reponses', reponseRoutes)
 app.use('/api/users', userRoutes)
 
 // ROUTE Login

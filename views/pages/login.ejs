@@ -52,7 +52,7 @@
                     }
                     console.log('Connexion réussie');
                     console.log('Votre token: ' + response.token);
-                    document.cookie = `token:${response.token}`
+                    document.location.assign('/')
                 })
         }
     </script>

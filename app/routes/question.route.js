@@ -1,12 +1,25 @@
 const express = require('express')
 const router = express.Router();
 const Question = require('../models/question.model');
+const Reponse = require('../models/reponse.model');
 
 // Retrieve all questions
 router.get('/', async (req, res) => {
     try {
         const questions = await Question.find();
         res.send(questions)
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
+    }
+})
+
+// Retrieve all reponse from one question
+router.get('/:id/reponses', async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+        const reponses = await Reponse.find({question_id: req.params.id})
+        res.send({question : question, reponses: reponses})
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);

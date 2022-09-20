@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 const verify = require('./verifyToken')
 
 // Get all users
-router.get('/', verify, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await User.find();
-        res.send('test')
+        res.send(users)
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
@@ -68,7 +68,8 @@ router.post('/login', async (req, res) => {
 
         // Set token
         const token = jwt.sign({_id: user._id, role: user.role}, process.env.SECRET_TOKEN, {expiresIn: "1h"});
-        res.header('auth-token', token).send({token: token})
+        user.token = token;
+        res.send(user)
 })
 
 // Update user

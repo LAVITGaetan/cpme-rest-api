@@ -6,9 +6,13 @@ const ReponseSchema = new mongoose.Schema({
         type: String,
         required: true
     },  
-    reponse_id: {
+    question_id: {
         type: String,
         required: true
+    },
+    form_id: {
+        type: String,
+        required: true,
     }
 });
 
