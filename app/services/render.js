@@ -71,22 +71,6 @@ exports.editAdherent = async (req, res) => {
     }
 }
 
-exports.editContact = async (req, res) => {
-    let token = req.cookies['token'] || '';
-    try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`, {
-            headers: {
-                'auth-token': token
-            }
-        })
-        res.render('pages/adherent/edit-contact', { title: 'Modifier un contact', adherent: fetch.data })
-        console.log(`données de contact récupérées : ${fetch.data.contact}`);
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-        console.log(error.message);
-    }
-}
-
 // Mandats 
 exports.getMandats = async (req, res) => {
     let token = req.cookies['token'] || '';

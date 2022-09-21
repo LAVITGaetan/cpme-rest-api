@@ -49,46 +49,6 @@ const AdherentSchema = new mongoose.Schema({
     status: {
         type: Boolean,
     },
-    contact: {
-        titre: {
-            type: String
-        },
-        nom: {
-            type: String
-        },
-        prenom: {
-            type: String
-        },
-        telephone: {
-            type: String
-        },
-        email: {
-            type: String
-        },
-        linkedin: {
-            type: String
-        }
-    },
-    contactSecondaire: {
-        titre: {
-            type: String
-        },
-        nom: {
-            type: String
-        },
-        prenom: {
-            type: String
-        },
-        telephone: {
-            type: String
-        },
-        email: {
-            type: String
-        },
-        linkedin: {
-            type: String
-        }
-    }
 });
 
 module.exports = new mongoose.model('Adherent', AdherentSchema);

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const Sondage = require('../models/sondage.model');
-const Question = require('../models/question.model');
+const Sondage = require('../models/sondage');
+const Question = require('../models/question');
 const verify = require('./verifyToken')
 
 // Retrieve all sondages

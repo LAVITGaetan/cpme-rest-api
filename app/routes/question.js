@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const Question = require('../models/question.model');
-const Reponse = require('../models/reponse.model');
+const Question = require('../models/question');
+const Reponse = require('../models/reponse');
 const verify = require('./verifyToken')
 
 // Retrieve all questions

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const Mandat = require('../models/mandat.model');
-const Representation = require('../models/representation.model');
+const Mandat = require('../models/mandat');
+const Representation = require('../models/representation');
 const verify = require('./verifyToken')
 // MULTER Settings
 const multer = require('multer');

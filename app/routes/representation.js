@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const Representation = require('../models/representation.model');
+const Representation = require('../models/representation');
 const verify = require('./verifyToken')
 
 // Retrieve all representations

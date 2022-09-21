@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const Adherent = require('../models/adherent.model');
+const Adherent = require('../models/adherent');
 const verify = require('./verifyToken')
 
 // MULTER Settings
@@ -71,20 +71,6 @@ router.post('/', verify, upload.single('adherentLogo'), async (req, res) => {
         logo: path,
         parution: req.body.parution,
         status: req.body.status,
-        contact : {
-            titre : req.body.contactTitre,
-            nom : req.body.contactNom,
-            prenom : req.body.contactPrenom,
-            telephone : req.body.contactTelephone,
-            linkedin : req.body.contactLinkedin,
-        },
-        contactSecondaire : {
-            titre : req.body.contactSecondaireTitre,
-            nom : req.body.contactSecondaireNom,
-            prenom : req.body.contactSecondairePrenom,
-            telephone : req.body.contactSecondaireTelephone,
-            linkedin : req.body.contactSecondaireLinkedin,
-        }
     });
     try {
         await adherent.save();
@@ -124,32 +110,6 @@ router.patch('/:id', verify, upload.single('adherentLogo'), async (req, res) => 
         res.status(500).send({ message: error.message })
     }
     res.send({ message: req.params.id })
-})
-
-// Update contact
-router.patch('/:id/contact', async (req, res) => {
-    const contact = {
-        contact : {
-            titre : req.body.contact_titre,
-            nom : req.body.contact_nom,
-            prenom : req.body.contact_prenom,
-            telephone : req.body.contact_telephone,
-            linkedin : req.body.contact_linkedin,
-        },
-        contactSecondaire : {
-            titre : req.body.contactSecondaire_titre,
-            nom : req.body.contactSecondaire_nom,
-            prenom : req.body.contactSecondaire_prenom,
-            telephone : req.body.contactSecondaire_telephone,
-            linkedin : req.body.contactSecondaire_linkedin,
-        }
-    };
-    try {
-        const updatedContact = await Adherent.findByIdAndUpdate(req.params.id, contact, { new: true });
-        res.send({ updatedContact })
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
 })
 
 // Delete adhérent

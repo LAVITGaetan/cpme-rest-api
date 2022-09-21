@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const Reponse = require('../models/reponse.model');
+const Reponse = require('../models/reponse');
 const verify = require('./verifyToken')
 
 // GET ALL

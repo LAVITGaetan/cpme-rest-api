@@ -6,14 +6,14 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-const adherentRoutes = require('./app/routes/adherent.route')
-const mandatRoutes = require('./app/routes/mandat.route')
-const mandataireRoutes = require('./app/routes/mandataire.route')
-const representationRoutes = require('./app/routes/representation.route')
-const sondageRoutes = require('./app/routes/sondage.route')
-const questionRoutes = require('./app/routes/question.route')
-const reponseRoutes = require('./app/routes/reponse.route')
-const userRoutes = require('./app/routes/user.route')
+const adherentRoutes = require('./app/routes/adherent')
+const mandatRoutes = require('./app/routes/mandat')
+const mandataireRoutes = require('./app/routes/mandataire')
+const representationRoutes = require('./app/routes/representation')
+const sondageRoutes = require('./app/routes/sondage')
+const questionRoutes = require('./app/routes/question')
+const reponseRoutes = require('./app/routes/reponse')
+const userRoutes = require('./app/routes/user')
 
 // middlewares
 app.use(express.json());
@@ -51,7 +51,6 @@ app.get('/adherents', services.getAdherents)
 app.get('/profil-adherent', services.getAdherent)
 app.get('/add-adherent', services.addAdherent)
 app.get('/edit-adherent', services.editAdherent)
-app.get('/edit-contact', services.editContact)
 
 // ROUTES Mandats
 app.get('/mandats', services.getMandats)
