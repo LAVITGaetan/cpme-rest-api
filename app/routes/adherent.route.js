@@ -30,7 +30,7 @@ const upload = multer({
 });
 
 // Get all adhérents
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
     try {
         const adherents = await Adherent.find();
         res.send(adherents)
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 })
 
 // Get one adhérent
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     try {
         const adherent = await Adherent.findById(req.params.id)
         res.send(adherent)
@@ -50,7 +50,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add adhérent
-router.post('/', upload.single('adherentLogo'), async (req, res) => {
+router.post('/', verify, upload.single('adherentLogo'), async (req, res) => {
     if (req.file) {
         path = req.file.path.substring(7)
     }
@@ -72,18 +72,18 @@ router.post('/', upload.single('adherentLogo'), async (req, res) => {
         parution: req.body.parution,
         status: req.body.status,
         contact : {
-            titre : req.body.contact_titre,
-            nom : req.body.contact_nom,
-            prenom : req.body.contact_prenom,
-            telephone : req.body.contact_telephone,
-            linkedin : req.body.contact_linkedin,
+            titre : req.body.contactTitre,
+            nom : req.body.contactNom,
+            prenom : req.body.contactPrenom,
+            telephone : req.body.contactTelephone,
+            linkedin : req.body.contactLinkedin,
         },
         contactSecondaire : {
-            titre : req.body.contactSecondaire_titre,
-            nom : req.body.contactSecondaire_nom,
-            prenom : req.body.contactSecondaire_prenom,
-            telephone : req.body.contactSecondaire_telephone,
-            linkedin : req.body.contactSecondaire_linkedin,
+            titre : req.body.contactSecondaireTitre,
+            nom : req.body.contactSecondaireNom,
+            prenom : req.body.contactSecondairePrenom,
+            telephone : req.body.contactSecondaireTelephone,
+            linkedin : req.body.contactSecondaireLinkedin,
         }
     });
     try {
@@ -95,7 +95,7 @@ router.post('/', upload.single('adherentLogo'), async (req, res) => {
 })
 
 // Update adhérent
-router.patch('/:id', upload.single('adherentLogo'), async (req, res) => {
+router.patch('/:id', verify, upload.single('adherentLogo'), async (req, res) => {
     if (req.file) {
         path = req.file.path.substring(7)
     }
@@ -150,11 +150,10 @@ router.patch('/:id/contact', async (req, res) => {
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
-    res.send({ message: req.params.id })
 })
 
 // Delete adhérent
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         await Adherent.findByIdAndRemove(req.params.id)
         res.status(200).send({ message: 'Adhérent supprimé' })
@@ -164,7 +163,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 // PATCH status
-router.patch('/status/:id/:boolean', async (req, res) => {
+router.patch('/status/:id/:boolean', verify, async (req, res) => {
     const adherent = await Adherent.findByIdAndUpdate(req.params.id, {
         status: req.params.boolean
     })
@@ -173,7 +172,7 @@ router.patch('/status/:id/:boolean', async (req, res) => {
 })
 
 // PATCH parution
-router.patch('/parution/:id/:boolean', async (req, res) => {
+router.patch('/parution/:id/:boolean', verify, async (req, res) => {
     const adherent = await Adherent.findByIdAndUpdate(req.params.id, {
         parution: req.params.boolean
     })

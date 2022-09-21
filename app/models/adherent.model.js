@@ -48,24 +48,46 @@ const AdherentSchema = new mongoose.Schema({
     },
     status: {
         type: Boolean,
-    },  
+    },
     contact: {
-        titre : {
-            type : String
+        titre: {
+            type: String
         },
-        nom : String,
-        prenom : String,
-        telephone : String,
-        email : String,
-        linkedin : String
+        nom: {
+            type: String
+        },
+        prenom: {
+            type: String
+        },
+        telephone: {
+            type: String
+        },
+        email: {
+            type: String
+        },
+        linkedin: {
+            type: String
+        }
     },
     contactSecondaire: {
-        titre : String,
-        nom : String,
-        prenom : String,
-        telephone : String,
-        email : String,
-        linkedin : String
+        titre: {
+            type: String
+        },
+        nom: {
+            type: String
+        },
+        prenom: {
+            type: String
+        },
+        telephone: {
+            type: String
+        },
+        email: {
+            type: String
+        },
+        linkedin: {
+            type: String
+        }
     }
 });
 

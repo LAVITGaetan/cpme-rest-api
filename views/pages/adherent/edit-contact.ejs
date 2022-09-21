@@ -1,158 +1,119 @@
 <%- include('../includes/header.ejs') %>
+    <%- include('../includes/navbar.ejs') %>
+        <div class="content">
+            <h1 class="title">Modifier les informations de contact</h1>
+            <div class="form-container">
+                <form data-redirection="/profil-adherent?id=<%=adherent._id%>"
+                    data-message="Informations de contact modifiées, cliquez sur le bouton pour revenir au profil"
+                    data-ressource="adherents/<%=adherent._id%>/contact" onsubmit="patchFormContact(event)" id="add-form"
+                    class="form-flex" enctype="multipart/form-data" method="POST"> <input value="<%= adherent.logo %>"
+                        type="hidden" id="logo" name="logo" class="form-input" placeholder="Url du logo" />
+                    <div class="form-group">
+                        <label for="titre" class="form-label">Titre du contact</label>
+                        <input <% if(adherent.contact) { %>
+                        value="<%= adherent.contact.titre %>"
+                            <%} %> name="contactTitre" id="contact-titre" type="text" class="form-input"
+                                placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="nom" class="form-label">Nom du contact</label>
+                        <input <% if(adherent.contact) { %>
+                        value="<%= adherent.contact.nom %>"
+                            <%} %> type="text" id="contact-nom" name="contact-nom" class="form-input" placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom" class="form-label">Prénom du contact</label>
+                        <input <% if(adherent.contact) { %>
+                        value="<%= adherent.contact.prenom%>"
+                            <%} %> id="contact-prenom"
+                                type="text" name="contact-prenom" class="form-input" placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email du contact</label>
+                        <input <% if(adherent.contact) { %>
+                        value="<%= adherent.contact.email %>"
+                            <%} %> id="contact-email"
+                                type="text" name="contact-email" class="form-input" placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone" class="form-label">Téléphone du contact</label>
+                        <input <% if(adherent.contact) { %>
+                        value="<%= adherent.contact.telephone %>"
+                            <%} %>
+                                id="contact-telephone" type="text" name="contact-telephone" class="form-input"
+                                placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin" class="form-label">Linkedin du contact</label>
+                        <input <% if(adherent.contact) { %>
+                        value="<%= adherent.contact.linkedin %>"
+                            <%} %>
+                                id="contact-linkedin" type="text" name="contact-linkedin" class="form-input"
+                                placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="titreSecondaire" class="form-label">Titre du contact secondaire</label>
+                        <input <% if(adherent.contactSecondaire) { %>
+                        value="<%= adherent.contactSecondaire.titre %>"
+                            <%} %>
+                                name="contactSecondaireTitre" id="contactSecondaire-titre" type="text" class="form-input"
+                                placeholder="Réponse">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="nomSecondaire" class="form-label">Nom du contact secondaire</label>
+                        <input <% if(adherent.contactSecondaire) { %>
+                        value="<%= adherent.contactSecondaire.nom %>"
+                            <%} %>
+                                id="contactSecondaire-nom" type="text" name="contactSecondaire-nom" class="form-input"
+                                placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenomSecondaire" class="form-label">Prénom du contact secondaire</label>
+                        <input <% if(adherent.contactSecondaire) { %>
+                        value="<%= adherent.contactSecondaire.prenom %>"
+                            <%} %>
+                                id="contactSecondaire-prenom" type="text" name="contactSecondaire-prenom"
+                                class="form-input"
+                                placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailSecondaire" class="form-label">Email du contact secondaire</label>
+                        <input <% if(adherent.contactSecondaire) { %>
+                        value="<%= adherent.contactSecondaire.email %>"
+                            <%} %>
+                                id="contactSecondaire-email" type="text" name="contactSecondaire-email" class="form-input"
+                                placeholder="Réponse">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephoneSecondaire" class="form-label">Téléphone du contact secondaire</label>
+                        <input <% if(adherent.contactSecondaire) { %>
+                        value="<%= adherent.contactSecondaire.telephone%>"
+                            <%} %>
+                                id="contactSecondaire-telephone" type="text" name="contactSecondaireTelephone"
+                                class="form-input" placeholder="Réponse">
+                    </div>
+                    <input type="hidden" name="id" id="id" value="<%= adherent._id%>">
 
-    <body>
-        <%- include('../includes/navbar.ejs') %>
-            <div class="content">
-                <h1 class="title">Modifier les informations de contact</h1>
-                <div class="form-container">
-                    <form class="form-flex" method="POST">
-                        <input value="<%= adherent.logo %>" type="hidden" id="logo" name="logo"
-                        class="form-input" placeholder="Url du logo" />
-                        <div class="form-group">
-                            <label for="titre" class="form-label">Titre du contact</label>
-                            <input <% if(adherent.contact) { %>
-                            value="<%= adherent.contact.titre %>"
-                                <%} %> required name="titre" id="titre" type="text" class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="nom" class="form-label">Nom du contact</label>
-                            <input <% if(adherent.contact) { %>
-                            value="<%= adherent.contact.nom %>"
-                                <%} %> id="nom" required
-                                    type="text" name="nom" class="form-input" placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="prenom" class="form-label">Prénom du contact</label>
-                            <input <% if(adherent.contact) { %>
-                            value="<%= adherent.contact.prenom%>"
-                                <%} %> id="prenom"
-                                    required type="text" name="prenom" class="form-input" placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email du contact</label>
-                            <input <% if(adherent.contact) { %>
-                            value="<%= adherent.contact.email %>"
-                                <%} %> id="email"
-                                    required type="text" name="email" class="form-input" placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="telephone" class="form-label">Téléphone du contact</label>
-                            <input <% if(adherent.contact) { %>
-                            value="<%= adherent.contact.telephone %>"
-                                <%} %>
-                                    id="telephone" required type="text" name="telephone" class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="linkedin" class="form-label">Linkedin du contact</label>
-                            <input <% if(adherent.contact) { %>
-                            value="<%= adherent.contact.linkedin %>"
-                                <%} %>
-                                    id="linkedin" required type="text" name="linkedin" class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="titreSecondaire" class="form-label">Titre du contact secondaire</label>
-                            <input <% if(adherent.contactSecondaire) { %>
-                            value="<%= adherent.contactSecondaire.titre %>"
-                                <%} %>
-                                    required name="titreSecondaire" id="titreSecondaire" type="text" class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nomSecondaire" class="form-label">Nom du contact secondaire</label>
-                            <input <% if(adherent.contactSecondaire) { %>
-                            value="<%= adherent.contactSecondaire.nom %>"
-                                <%} %>
-                                    id="nomSecondaire" required type="text" name="nomSecondaire" class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="prenomSecondaire" class="form-label">Prénom du contact secondaire</label>
-                            <input <% if(adherent.contactSecondaire) { %>
-                            value="<%= adherent.contactSecondaire.prenom %>"
-                                <%} %>
-                                    id="prenomSecondaire" required type="text" name="prenomSecondaire"
-                                    class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="emailSecondaire" class="form-label">Email du contact secondaire</label>
-                            <input <% if(adherent.contactSecondaire) { %>
-                            value="<%= adherent.contactSecondaire.email %>"
-                                <%} %>
-                                    id="emailSecondaire" required type="text" name="emailSecondaire" class="form-input"
-                                    placeholder="Réponse">
-                        </div>
-                        <div class="form-group">
-                            <label for="telephoneSecondaire" class="form-label">Téléphone du contact secondaire</label>
-                            <input <% if(adherent.contactSecondaire) { %>
-                            value="<%= adherent.contactSecondaire.telephone%>"
-                                <%} %>
-                                    id="telephoneSecondaire" required type="text" name="telephoneSecondaire"
-                                    class="form-input" placeholder="Réponse">
-                        </div>
-                        <input type="hidden" name="id" id="id" value="<%= adherent._id%>">
-
-                        <div class="form-group">
-                            <label for="linkedinSecondaire" class="form-label">Linkedin du contact secondaire</label>
-                            <input <% if(adherent.contactSecondaire) { %>
-                            value="<%= adherent.contactSecondaire.linkedin %>"
-                                <%} %>
-                                    id="linkedinSecondaire" required type="text" name="linkedinSecondaire"
-                                    class="form-input" placeholder="Réponse">
-                        </div>
-                        <div class="form-action">
-                            <button type="submit" onclick="editAdherent(event)" class="cta">Modifier</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label for="contactSecondaire-linkedin" class="form-label">Linkedin du contact secondaire</label>
+                        <input <% if(adherent.contactSecondaire) { %>
+                        value="<%= adherent.contactSecondaire.linkedin %>"
+                            <%} %>
+                                id="contactSecondaire-linkedin" type="text" name="contactSecondaireLinkedin"
+                                class="form-input" placeholder="Réponse">
+                    </div>
+                    <div class="form-action">
+                        <button type="submit" class="cta">Modifier</button>
+                    </div>
+                </form>
             </div>
+        </div>
+        <%- include('../includes/succes.ejs') %>
 
-    </body>
-    <script>
+            </body>
 
-        function editAdherent(event) {
-            event.preventDefault();
-            let id = document.getElementById('id').value;
-            let contact = {
-                    contact_titre: document.getElementById('titre').value,
-                    contact_nom: document.getElementById('nom').value,
-                    contact_prenom: document.getElementById('prenom').value,
-                    contact_email: document.getElementById('email').value,
-                    contact_telephone: document.getElementById('telephone').value,
-                    contact_linkedin: document.getElementById('linkedin').value,
-                    contactSecondaire_titre: document.getElementById('titreSecondaire').value,
-                    contactSecondaire_nom: document.getElementById('nomSecondaire').value,
-                    contactSecondaire_prenom: document.getElementById('prenomSecondaire').value,
-                    contactSecondaire_email: document.getElementById('emailSecondaire').value,
-                    contactSecondaire_telephone: document.getElementById('telephoneSecondaire').value,
-                    contactSecondaire_linkedin: document.getElementById('linkedinSecondaire').value
-            }
-            try {
-                fetch(`http://localhost:9999/api/adherents/${id}/contact`, {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    method: "PATCH",
-                    body: JSON.stringify(contact)
-                })
-                .then(response => response.json())
-                .then((response) => {
-                    console.log(response);
-                })
-                // setTimeout(() => {
-                //     document.location.reload()
-                // }, 500);
+            <script src="js/index.js"></script>
+            <script src="js/api.js"></script>
 
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    </script>
-    <script src="/js/index.js"></script>
-
-    </html>
+            </html>

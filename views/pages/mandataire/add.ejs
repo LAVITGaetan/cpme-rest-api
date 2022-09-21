@@ -6,11 +6,10 @@
             <div class="content">
                 <h1 class="title">Ajouter un mandataire</h1>
                 <div class="form-container">
-                    <form data-ressource="mandataires" onsubmit="postForm(event)" id="add-form" class="form-flex" enctype="multipart/form-data" method="POST">
+                    <form data-redirection="/mandataires" data-message="Mandataire ajouté, cliquez sur le bouton pour revenir à la page des mandataires" data-ressource="mandataires" onsubmit="postForm(event)" id="add-form" class="form-flex" enctype="multipart/form-data" method="POST">
                         <div class="form-group">
                             <label for="image" class="form-label">Url du portrait</label>
-                            <input type="file" name="mandataireLogo">
-                            <input type="text" name="logo" class="form-input" placeholder="Url du logo"/>
+                            <input type="file" class="file-input" name="mandataireLogo">
                         </div>
                         <div class="form-group">
                             <label for="nom" class="form-label">Nom</label>
@@ -30,6 +29,7 @@
                     </form>
                 </div>
             </div>
+            <%- include('../includes/succes.ejs') %>
 
     </body>
     <script src="js/api.js"></script>

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Mandataire = require('../models/mandataire.model');
+const Representation = require('../models/representation.model');
 const verify = require('./verifyToken')
 
 // MULTER Settings
@@ -30,7 +31,7 @@ const upload = multer({
 });
 
 // Retrieve all mandataires
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
     try {
         const mandataires = await Mandataire.find();
         res.send(mandataires)
@@ -40,7 +41,7 @@ router.get('/', async (req, res) => {
 })
 
 // Retrieve one mandataire
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     try {
         const mandataire = await Mandataire.findById(req.params.id)
         res.send(mandataire)
@@ -72,7 +73,7 @@ router.post('/', verify, upload.single('mandataireLogo'), async (req, res) => {
 })
 
 // Update mandataire
-router.patch('/:id', upload.single('mandataireLogo'), async (req, res) => {
+router.patch('/:id', verify, upload.single('mandataireLogo'), async (req, res) => {
     if (req.file) {
         path = req.file.path.substring(7)
     }
@@ -95,12 +96,24 @@ router.patch('/:id', upload.single('mandataireLogo'), async (req, res) => {
 })
 
 //  Delete mandataire
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         await Mandataire.findByIdAndRemove(req.params.id)
         res.status(200).send({ message: 'Mandataire supprimé' })
     } catch (error) {
         res.send({ message: error.message })
+    }
+})
+
+// Delete mandat and representations related
+router.delete('/:id/representations', async (req, res) => {
+    try {
+        await Mandataire.findByIdAndRemove(req.params.id)
+        await Representation.deleteMany({id_mandataire: req.params.id})
+        res.send({message: 'Mandataire et representations liées au mandataire supprimé'})
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
     }
 })
 module.exports = router;

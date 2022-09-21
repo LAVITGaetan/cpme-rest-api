@@ -8,3 +8,21 @@ function generateCode() {
     }
     field.value = result;
 }
+
+function showModalRepresentation(id, titre) {
+    let modal = document.getElementsByClassName('modal')[0];
+    let input = document.getElementById('input-titre');
+    let submit = document.getElementById('modal-submit');
+    submit.setAttribute('onclick', `editRepresentation('${id}')`)
+    modal.style.display = 'grid';
+    input.value = titre;
+}
+
+function closeModalRepresentation() {
+    let modal = document.getElementsByClassName('modal')[0];
+    modal.style.display = 'none';
+}
+
+function closeModal() {
+    document.getElementsByClassName('modal')[0].style.display = 'none'
+}

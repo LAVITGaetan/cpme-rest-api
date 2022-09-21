@@ -6,7 +6,7 @@
             <div class="content">
                 <h1 class="title">Modifier un adhérent</h1>
                 <div class="form-container">
-                    <form data-ressource="mandataires/<%=mandataire._id%>" onsubmit="patchForm(event)" id="add-form"
+                    <form data-redirection="/profil-mandataire?id=<%=mandataire._id%>" data-message="Mandataire modifié, cliquez sur le bouton pour revenir au profil" data-ressource="mandataires/<%=mandataire._id%>" onsubmit="patchForm(event)" id="add-form"
                         class="form-flex" enctype="multipart/form-data" method="POST">
                         <div class="form-group">
                             <label for="logo" class="form-label">Image</label>
@@ -43,6 +43,7 @@
                     </form>
                 </div>
             </div>
+            <%- include('../includes/succes.ejs') %>
 
     </body>
     <script src="js/api.js"></script>

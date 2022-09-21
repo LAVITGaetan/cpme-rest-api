@@ -7,10 +7,11 @@ exports.login = (req, res) => {
 
 // Index
 exports.index = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
         let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`, {
             headers: {
-                'auth-token': 'azeknjifizbfbf4454845j'
+                'auth-token': token
             }
         })
         res.render('pages/accueil', { title: 'Accueil', adherents: fetch.data })
@@ -22,8 +23,13 @@ exports.index = async (req, res) => {
 
 // Adhérents
 exports.getAdherents = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/adherent/liste', { title: 'Liste des adhérents', adherents: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -32,8 +38,13 @@ exports.getAdherents = async (req, res) => {
 }
 
 exports.getAdherent = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/adherent/profil', { title: 'Profil adhérent', adherent: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -46,8 +57,13 @@ exports.addAdherent = (req, res) => {
 }
 
 exports.editAdherent = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/adherent/edit', { title: 'Modifier un adhérent', adherent: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -56,8 +72,13 @@ exports.editAdherent = async (req, res) => {
 }
 
 exports.editContact = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/adherent/edit-contact', { title: 'Modifier un contact', adherent: fetch.data })
         console.log(`données de contact récupérées : ${fetch.data.contact}`);
     } catch (error) {
@@ -68,9 +89,18 @@ exports.editContact = async (req, res) => {
 
 // Mandats 
 exports.getMandats = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats`)
-        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/mandat/liste', { title: 'Liste des mandats', mandats: fetch.data, representations: fetch_representations.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -79,10 +109,23 @@ exports.getMandats = async (req, res) => {
 }
 
 exports.getMandat = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch_mandat = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`)
-        let fetch_mandataires = await axios.get(`${process.env.LOCAL_API}/mandataires`)
-        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
+        let fetch_mandat = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_mandataires = await axios.get(`${process.env.LOCAL_API}/mandataires`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/mandat/profil', { title: 'Profil mandat', mandat: fetch_mandat.data, mandataires: fetch_mandataires.data, representations: fetch_representations.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -95,8 +138,13 @@ exports.addMandat = (req, res) => {
 }
 
 exports.editMandat = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandats/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/mandat/edit', { title: 'Modifier un mandat', mandat: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -106,9 +154,18 @@ exports.editMandat = async (req, res) => {
 
 // Mandataires 
 exports.getMandataires = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires`)
-        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/mandataire/liste', { title: 'Liste des mandataires', mandataires: fetch.data, representations: fetch_representations.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -117,10 +174,23 @@ exports.getMandataires = async (req, res) => {
 }
 
 exports.getMandataire = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch_mandataire = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`)
-        let fetch_mandats = await axios.get(`${process.env.LOCAL_API}/mandats`)
-        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`)
+        let fetch_mandataire = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_mandats = await axios.get(`${process.env.LOCAL_API}/mandats`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_representations = await axios.get(`${process.env.LOCAL_API}/representations`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/mandataire/profil', { title: 'Profil mandataire', mandataire: fetch_mandataire.data, mandats: fetch_mandats.data, representations: fetch_representations.data })
 
     } catch (error) {
@@ -134,8 +204,13 @@ exports.addMandataire = (req, res) => {
 }
 
 exports.editMandataire = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/mandataires/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/mandataire/edit', { title: 'Modifier un mandataire', mandataire: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -145,8 +220,13 @@ exports.editMandataire = async (req, res) => {
 
 // Sondages
 exports.getSondages = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch = await axios.get(`${process.env.LOCAL_API}/sondages`)
+        let fetch = await axios.get(`${process.env.LOCAL_API}/sondages`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/sondage/liste', { title: 'Liste des sondages', sondages: fetch.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -155,9 +235,18 @@ exports.getSondages = async (req, res) => {
 }
 
 exports.getSondage = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch_sondage = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}`)
-        let fetch_questions = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/questions`)
+        let fetch_sondage = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_questions = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/questions`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/sondage/profil', { title: 'Profil sondage', sondage: fetch_sondage.data, questions: fetch_questions })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -170,9 +259,18 @@ exports.addSondage = (req, res) => {
 }
 
 exports.editSondage = async (req, res) => {
+    let token = req.cookies['token'] || '';
     try {
-        let fetch_sondage = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}`)
-        let fetch_questions = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/questions`)
+        let fetch_sondage = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        let fetch_questions = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/questions`, {
+            headers: {
+                'auth-token': token
+            }
+        })
         res.render('pages/sondage/edit', { title: 'ProfEditer un sondage', sondage: fetch_sondage.data, questions: fetch_questions.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
@@ -181,5 +279,6 @@ exports.editSondage = async (req, res) => {
 }
 
 exports.resultSondage = (req, res) => {
+    let token = req.cookies['token'] || '';
     res.render('pages/sondage/result', { title: 'Réponses au sondage' })
 }

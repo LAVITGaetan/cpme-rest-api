@@ -2,9 +2,10 @@ const express = require('express')
 const router = express.Router();
 const Sondage = require('../models/sondage.model');
 const Question = require('../models/question.model');
+const verify = require('./verifyToken')
 
 // Retrieve all sondages
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
     try {
         const sondages = await Sondage.find();
         res.send(sondages)
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
 })
 
 // Retrieve one sondage
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     try {
         const sondage = await Sondage.findById(req.params.id)
         res.send(sondage)
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Retrieve questions from one sondage
-router.get('/:id/questions', async (req, res) => {
+router.get('/:id/questions', verify, async (req, res) => {
     try {
         const questions = await Question.find().sort({ order: 1});
         let sondage_questions = questions.filter(el => el.form_id === req.params.id);
@@ -36,7 +37,7 @@ router.get('/:id/questions', async (req, res) => {
 })
 
 // Add sondage
-router.post('/', async (req, res) => {
+router.post('/', verify, async (req, res) => {
     const sondage = new Sondage(req.body);
     try {
         await sondage.save();
@@ -47,7 +48,7 @@ router.post('/', async (req, res) => {
 })
 
 // Update sondage
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verify, async (req, res) => {
     try {
         const sondage = await Sondage.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.send({ sondage })
@@ -58,7 +59,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 //  Delete sondage
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         await Sondage.findByIdAndRemove(req.params.id)
         res.status(200).send({ message: 'Sondage supprimé' })
@@ -68,7 +69,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 // Delete questions from one sondage
-router.delete('/:id/questions', async (req, res) => {
+router.delete('/:id/questions', verify, async (req, res) => {
     try {
         await Question.deleteMany({form_id: req.params.id});
         res.send('Questions liées au sondage supprimées')

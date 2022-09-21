@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const Mandat = require('../models/mandat.model');
-
+const Representation = require('../models/representation.model');
+const verify = require('./verifyToken')
 // MULTER Settings
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -29,7 +30,7 @@ const upload = multer({
 });
 
 // Retrieve all mandats
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
     try {
         const mandats = await Mandat.find();
         res.send(mandats)
@@ -39,7 +40,7 @@ router.get('/', async (req, res) => {
 })
 
 // Retrieve one mandat
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     try {
         const mandat = await Mandat.findById(req.params.id)
         res.send(mandat)
@@ -49,7 +50,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add mandat
-router.post('/', upload.single('mandatLogo'), async (req, res) => {
+router.post('/', verify, upload.single('mandatLogo'), async (req, res) => {
     if (req.file) {
         path = req.file.path.substring(7)
     }
@@ -76,7 +77,7 @@ router.post('/', upload.single('mandatLogo'), async (req, res) => {
 
 
 // Update mandat
-router.patch('/:id', upload.single('mandatLogo'), async (req, res) => {
+router.patch('/:id', verify, upload.single('mandatLogo'), async (req, res) => {
     if (req.file) {
         path = req.file.path.substring(7)
     }
@@ -103,12 +104,24 @@ router.patch('/:id', upload.single('mandatLogo'), async (req, res) => {
 })
 
 //  Delete mandat
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         await Mandat.findByIdAndRemove(req.params.id)
         res.status(200).send({ message: 'Mandat supprimé' })
     } catch (error) {
         res.send({ message: error.message })
+    }
+})
+
+// Delete mandat and representations related
+router.delete('/:id/representations', async (req, res) => {
+    try {
+        await Mandat.findByIdAndRemove(req.params.id)
+        await Representation.deleteMany({id_mandat: req.params.id})
+        res.send({message: 'Mandat et representations liées au mandat supprimé'})
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
     }
 })
 module.exports = router;

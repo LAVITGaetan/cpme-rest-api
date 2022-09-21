@@ -2,9 +2,10 @@ const express = require('express')
 const router = express.Router();
 const Question = require('../models/question.model');
 const Reponse = require('../models/reponse.model');
+const verify = require('./verifyToken')
 
 // Retrieve all questions
-router.get('/', async (req, res) => {
+router.get('/', verify, async (req, res) => {
     try {
         const questions = await Question.find();
         res.send(questions)
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
 })
 
 // Retrieve all reponse from one question
-router.get('/:id/reponses', async (req, res) => {
+router.get('/:id/reponses', verify, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
         const reponses = await Reponse.find({question_id: req.params.id})
@@ -27,7 +28,7 @@ router.get('/:id/reponses', async (req, res) => {
 })
 
 // Retrieve one question
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id)
         res.send(question)
@@ -37,7 +38,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add question
-router.post('/', async (req, res) => {
+router.post('/', verify, async (req, res) => {
     const question = new Question(req.body);
     try {
         await question.save();
@@ -49,7 +50,7 @@ router.post('/', async (req, res) => {
 })
 
 // Update question
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verify, async (req, res) => {
     try {
         const question = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.send({ question })
@@ -60,7 +61,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 //  Delete question
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         await Question.findByIdAndRemove(req.params.id)
         res.status(200).send({ message: 'Question supprimé' })

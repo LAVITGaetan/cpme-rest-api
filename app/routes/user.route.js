@@ -18,7 +18,7 @@ router.get('/', verify, async (req, res) => {
 })
 
 // Get one user
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         res.send(user)
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add user
-router.post('/', async (req, res) => {
+router.post('/', verify, async (req, res) => {
 
     // Check if email is already existing
     const emailExist = await User.findOne({ email: req.body.email })
@@ -69,15 +69,16 @@ router.post('/login', async (req, res) => {
     if (!validPassword) return res.send({ message: 'Mot de passe incorrect' })
 
     // Set token
-    const secret_token = process.env.SECRET_TOKEN;
-    const expirationSeconds = 3600;
-    const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "1h" });
+    const secret_token = process.env.SECRET_TOKEN;  
+    // 24h 
+    const expirationSeconds = 86400;
+    const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "24h" });
     res.cookie("token", token, { maxAge: expirationSeconds * 1000})
     res.header('auth-token', token).send({ token: token })
 })
 
 // Update user
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verify, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.send({ user })
@@ -87,7 +88,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 // Delete user
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
     try {
         await User.findByIdAndRemove(req.params.id)
         res.status(200).send({ message: 'Adhérent supprimé' })
