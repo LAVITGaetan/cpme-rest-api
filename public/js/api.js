@@ -28,7 +28,7 @@ function postForm(event) {
     let redirection = form.getAttribute('data-redirection')
     let data = new FormData(form)
     try {
-        fetch(`http://localhost:9999/api/${ressource}`, {
+        fetch(`https://cpme-rest-api.herokuapp.com/api/${ressource}`, {
             method: 'POST',
             headers: {
                 'auth-token': getCookie('token')
@@ -54,7 +54,7 @@ function patchForm(event) {
     let ressource = form.getAttribute('data-ressource')
     let data = new FormData(form)
     try {
-        fetch(`http://localhost:9999/api/${ressource}`, {
+        fetch(`https://cpme-rest-api.herokuapp.com/api/${ressource}`, {
             method: 'PATCH',
             headers: {
                 'auth-token': getCookie('token')
@@ -78,7 +78,7 @@ function deleteRessource(element) {
     let redirection = element.getAttribute('data-redirection');
     if(confirm('Confirmez-vous la suppression ?')) {
         try {
-            fetch(`http://localhost:9999/api/${ressource}`, {
+            fetch(`https://cpme-rest-api.herokuapp.com/api/${ressource}`, {
                 method: 'DELETE',
                 headers: {
                     'auth-token': getCookie('token')

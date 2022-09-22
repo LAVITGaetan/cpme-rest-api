@@ -28,6 +28,7 @@
             </div>
             <div class="login9"></div>
         </div>
+        <%- include('includes/succes.ejs') %>
 
     </body>
     <script>
@@ -37,7 +38,7 @@
                 email: document.getElementById('email').value,
                 identifiant: document.getElementById('identifiant').value,
             }
-            fetch('http://localhost:9999/api/users/login', {
+            fetch('https://cpme-rest-api.herokuapp.com/api/users/login', {
                 headers: {
                     'Content-type': 'application/json'
                 },
@@ -50,12 +51,14 @@
                         console.log('Connexion refusée');
                         return;
                     }
-                    console.log('Connexion réussie');
-                    console.log('Votre token: ' + response.token);
+                    let message = 'Connexion réussi, cliquez sur le bouton pour continuer';
+                        let redirecton = `/`;
+                        showModalSucces(message, redirecton)
                 })
         }
     </script>
 
-    <script src="/js/index.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/api.js"></script>
 
     </html>

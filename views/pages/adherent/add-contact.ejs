@@ -53,12 +53,13 @@
                         nom: document.getElementById('nom').value,
                         prenom: document.getElementById('prenom').value,
                         telephone: document.getElementById('telephone').value,
+                        email: document.getElementById('email').value,
                         linkedin: document.getElementById('linkedin').value,
                         id_adherent: '<%=adherent._id%>'
                     }
                     console.log(data);
                     try {
-                        fetch(`http://localhost:9999/api/contacts`, {
+                        fetch(`https://cpme-rest-api.herokuapp.com/api/contacts`, {
                             method: "POST",
                             headers: {
                                 'Content-type': 'application/json'

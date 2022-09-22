@@ -150,7 +150,7 @@
             console.log(questions);
             console.log(newQuestions);
             try {
-                fetch(`http://localhost:9999/api/sondages/${id}`, {
+                fetch(`https://cpme-rest-api.herokuapp.com/api/sondages/${id}`, {
                     headers: {
                         'Content-type': 'application/json',
                         'auth-token': getCookie('token')
@@ -161,7 +161,7 @@
                     .then((response) => response.json())
                     .then((response) => {
                         for (let i = 0; i < questions.length; i++) {
-                            fetch(`http://localhost:9999/api/questions/${questions[i]._id}`, {
+                            fetch(`https://cpme-rest-api.herokuapp.com/api/questions/${questions[i]._id}`, {
                                 headers: {
                                     'Content-type': 'application/json',
                                     'auth-token': getCookie('token')
@@ -178,7 +178,7 @@
                         }
                         for (let i = 0; i < newQuestions.length; i++) {
                             newQuestions[i].form_id = id;
-                            fetch(`http://localhost:9999/api/questions`, {
+                            fetch(`https://cpme-rest-api.herokuapp.com/api/questions`, {
                                 headers: {
                                     'Content-type': 'application/json',
                                     'auth-token': getCookie('token')

@@ -126,7 +126,7 @@
                         titre: document.getElementById('input-titre').value
                     }
                     try {
-                        fetch(`http://localhost:9999/api/representations/${id}`, {
+                        fetch(`https://cpme-rest-api.herokuapp.com/api/representations/${id}`, {
                             method: "PATCH",
                             headers: {
                                 'Content-type': 'application/json'
@@ -154,7 +154,7 @@
                         titre: document.getElementById('titre').value,
                     }
                     try {
-                        fetch(`http://localhost:9999/api/representations`, {
+                        fetch(`https://cpme-rest-api.herokuapp.com/api/representations`, {
                             method: "POST",
                             headers: {
                                 'Content-type': 'application/json'

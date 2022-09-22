@@ -384,7 +384,7 @@ function destroyInput(id) {
 function destroyExistingInput(id) {
     if (window.confirm('Supprimer cette question de manière définitive?')) {
         try {
-            fetch(`http://localhost:9999/api/questions/${id}`, {
+            fetch(`https://cpme-rest-api.herokuapp.com/api/questions/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'auth-token': getCookie('token')
