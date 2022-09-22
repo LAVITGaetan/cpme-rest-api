@@ -51,7 +51,9 @@
                                             class="container-action no-decoration">
                                             <div class="container-cta">Modifier</div>
                                         </a>
-                                        <div data-message="Adhérent supprimé, cliquez sur le bouton pour revenir à la liste des adhérents" data-redirection="/adherents" data-ressource="adherents/<%= adherent._id %>" onclick="deleteRessource(this)" class="container-delete">
+                                        <div data-message="Adhérent supprimé, cliquez sur le bouton pour revenir à la liste des adhérents"
+                                            data-redirection="/adherents" data-ressource="adherents/<%= adherent._id %>"
+                                            onclick="deleteRessource(this)" class="container-delete">
                                             <div class="container-ctd">Supprimer</div>
                                         </div>
                                     </div>
@@ -60,120 +62,89 @@
 
                     <div class="container">
                         <div class="container-header">Parution dans l' annuaire</div>
-                        <% if (adherent.contact) { %>
-                            <div class="container-row bold">Contact principal</div>
-                            <div class="container-contact">
-                            <%if(adherent.contact.titre) {%>
-                            <div class="container-row"><span class="row-label">Titre :
-                                </span>
-                                <%= adherent.contact.titre %>
-                            </div>
-                            <% } %>
-
-                            <%if(adherent.contact.prenom && adherent.contact.nom) {%>
-                            <div class="container-row"><span class="row-label">Identité :
-                                </span>
-                                <%= adherent.contact.prenom %>
-                                    <%= adherent.contact.nom %>
-                            </div>
-                            <% } %>
-
-                            <%if(adherent.contact.email) {%>
-                            <div class="container-row"><span class="row-label">Email :
-                                    <%= adherent.contact.email %>
-                                </span>
-                            </div>
-                            <% } %>
-
-                            <%if(adherent.contact.telephone) {%>
-                            <div class="container-row"><span class="row-label">Téléphone :
-                                </span>
-                                <%= adherent.contact.telephone %>
-                            </div>
-                            <% } %>
-
-                            <%if(adherent.contact.linkedin) {%>
-                                <div class="container-row"><span class="row-label">LinkedIn :
-                                </span>
-                                <%= adherent.contact.linkedin %>
-                            </div>
-                            <% } %>
-                        </div>
-                            <%if(adherent.contactSecondaire) {%>
-                                <div class="container-row bold">Contact secondaire</div>
+                        <% if (contacts.length> 0) { %>
+                            <% for(let i=0; i < contacts.length; i++) {%>
                                 <div class="container-contact">
-                                <% if (adherent.contactSecondaire.nom && adherent.contactSecondaire.titre) { %>
-                                    <div class="container-row"><span class="row-label">Titre :
-                                        </span><%= adherent.contactSecondaire.titre %>
+                                    <div data-redirection="profil-adherent?id=<%=adherent._id%>"
+                                        data-message="Contact supprimé, cliquez pour raffraichir la page"
+                                        data-ressource="contacts/<%=contacts[i]._id%>" class="contact-delete"
+                                        onclick="deleteRessource(this)">
+                                        <img src="img/chat.png" width="24px" height="24px" alt="delete">
                                     </div>
-                                    <% } %>
-                                        <% if (adherent.contactSecondaire.nom && adherent.contactSecondaire.prenom) { %>
-                                            <div class="container-row"><span class="row-label">Identité :
-                                                </span>
-                                                <%= adherent.contactSecondaire.prenom %>
-                                                    <%= adherent.contactSecondaire.nom %>
-                                            </div>
-                                            <% } %>
-                                                <% if (adherent.contactSecondaire.email) { %>
-                                                    <div class="container-row"><span class="row-label">Email :
-                                                            <%= adherent.contactSecondaire.email %>
-                                                        </span>
+                                    <a class="contact-edit" href="edit-contact?id=<%=adherent._id%>&contact=<%=contacts[i]._id%>">
+                                        <img src="img/edit-cta.png" width="24px" height="24px" alt="edit">
+                                    </a>
 
-                                                    </div>
-                                                    <% } %>
-                                                        <% if (adherent.contactSecondaire.telephone) { %>
-                                                            <div class="container-row"><span class="row-label">Téléphone
-                                                                    :
-                                                                </span>
-                                                                <%= adherent.contactSecondaire.telephone %>
-                                                            </div>
-                                                            <% } %>
-                                                                <% if (adherent.contactSecondaire.linkedin) { %>
-                                                                    <div class="container-row"><span
-                                                                            class="row-label">LinkedIn :
-                                                                        </span>
-                                                                        <%= adherent.contactSecondaire.linkedin %>
-                                                                    </div>
-                                                                    <% } %>
+                                    <div class="container-row"><span class="row-label bold">Contact <%=i+1%>
+                                        </span>
+                                    </div>
+                                    <%if(contacts[i].titre) {%>
+                                        <div class="container-row"><span class="row-label">Titre :
+                                            </span>
+                                            <%= contacts[i].titre %>
+                                        </div>
+                                        <% } %>
+                                            <%if(contacts[i].prenom && contacts[i].nom) {%>
+                                                <div class="container-row"><span class="row-label">Identité :
+                                                    </span>
+                                                    <%= contacts[i].prenom %>
+                                                        <%= contacts[i].nom %>
+                                                </div>
+                                                <% } %>
+
+                                                    <%if(contacts[i].email) {%>
+                                                        <div class="container-row"><span class="row-label">Email :
+                                                                <%= contacts[i].email %>
+                                                            </span>
+                                                        </div>
+                                                        <% } %>
+
+                                                            <%if(contacts[i].telephone) {%>
+                                                                <div class="container-row"><span
+                                                                        class="row-label">Téléphone
+                                                                        :
+                                                                    </span>
+                                                                    <%= contacts[i].telephone %>
                                                                 </div>
+                                                                <% } %>
+
+                                                                    <%if(contacts[i].linkedin) {%>
+                                                                        <div class="container-row"><span
+                                                                                class="row-label">LinkedIn :
+                                                                            </span>
+                                                                            <%= contacts[i].linkedin %>
+                                                                        </div>
                                                                         <% } %>
-                                                                            <% } else { %>
-                                                                                <div class="container-row">Aucune
-                                                                                    informations de contact</div>
-                                                                                <% } %>
+                                </div>
+                                <% } %>
+                                    <% } else { %>
+                                        <div class="container-row">Aucune
+                                            informations de contact</div>
+                                        <% } %>
 
-                                                                                    <div class="container-row"><span
-                                                                                            class="row-label">Parution :
-                                                                                        </span>
-                                                                                        <%= adherent.parution==1
-                                                                                            ? 'activée' : 'desactivée'
-                                                                                            %>
-                                                                                    </div>
-                                                                                    <div class="flex">
-                                                                                        <div class="container-action"><a
-                                                                                                href="/edit-contact?id=<%= adherent._id %>"
-                                                                                                class="container-cta">Modifier
-                                                                                        </div></a>
-                                                                                        <% if (adherent.parution) { %>
-                                                                                            <div onclick="disableParution('<%= adherent._id %>')"
-                                                                                                class="container-delete">
-                                                                                                <div
-                                                                                                    class="container-ctd">
-                                                                                                    Désactiver</div>
-                                                                                            </div>
-                                                                                            <% }else {%>
-                                                                                                <div onclick="enableParution('<%= adherent._id %>')"
-                                                                                                    class="container-delete">
-                                                                                                    <div
-                                                                                                        class="container-ctd">
-                                                                                                        Activer</div>
-                                                                                                </div>
-                                                                                                <%} %>
-
-                                                                                    </div>
-
+                                            <div class="container-row"><span class="row-label">Parution :
+                                                </span>
+                                                <%= adherent.parution==1 ? 'activée' : 'desactivée' %>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="container-action">
+                                                    <a href="add-contact?id=<%=adherent._id%>" class="container-cta no-decoration">Ajouter un contact</a>
+                                                </div>
+                                                <% if (adherent.parution) { %>
+                                                    <div onclick="disableParution('<%= adherent._id %>')"
+                                                        class="container-delete">
+                                                        <div class="container-ctd">
+                                                            Désactiver la parution</div>
+                                                    </div>
+                                                    <% }else {%>
+                                                        <div onclick="enableParution('<%= adherent._id %>')"
+                                                            class="container-delete">
+                                                            <div class="container-ctd">
+                                                                Activer la parution</div>
+                                                        </div>
+                                                        <%} %>
+                                            </div>
                     </div>
-
                     <div class="profil-settings">
                         <div class="container-row"><span class="row-label">Adresse de connexion :
                             </span>
@@ -193,72 +164,66 @@
                                 </div>
                                 <%} %>
                     </div>
-
                 </div>
-
-
-
-
             </div>
             <%- include('../includes/succes.ejs') %>
+                </body>
+                <script>
+                    function enableAdherent(id) {
+                        if (confirm('Voulez-vous vraiment activer cette adhérent ?')) {
+                            fetch(`http://localhost:9999/api/adherents/status/${id}/true`, {
+                                method: "PATCH",
+                                headers: {
+                                    'Content-type': 'application/json'
+                                }
+                            })
+                            setTimeout(() => {
+                                document.location.reload();
+                            }, 500);
+                        }
+                    }
+                    function disableAdherent(id) {
+                        if (confirm('Voulez-vous vraiment désactiver cette adhérent ?')) {
+                            fetch(`http://localhost:9999/api/adherents/status/${id}/false`, {
+                                method: "PATCH",
+                                headers: {
+                                    'Content-type': 'application/json'
+                                }
+                            })
+                            setTimeout(() => {
+                                document.location.reload();
+                            }, 500);
+                        }
+                    }
+                    function enableParution(id) {
+                        if (confirm('Voulez-vous vraiment activer cette Parution ?')) {
+                            fetch(`http://localhost:9999/api/adherents/parution/${id}/true`, {
+                                method: "PATCH",
+                                headers: {
+                                    'Content-type': 'application/json'
+                                }
+                            })
+                            setTimeout(() => {
+                                document.location.reload();
+                            }, 500);
+                        }
+                    }
+                    function disableParution(id) {
+                        if (confirm('Voulez-vous vraiment désactiver cette Parution ?')) {
+                            fetch(`http://localhost:9999/api/adherents/parution/${id}/false`, {
+                                method: "PATCH",
+                                headers: {
+                                    'Content-type': 'application/json'
+                                }
+                            })
+                            setTimeout(() => {
+                                document.location.reload();
+                            }, 500);
+                        }
+                    }
 
-            </body>
-            <script>
-                function enableAdherent(id) {
-                    if (confirm('Voulez-vous vraiment activer cette adhérent ?')) {
-                        fetch(`http://localhost:9999/api/adherents/status/${id}/true`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
-                function disableAdherent(id) {
-                    if (confirm('Voulez-vous vraiment désactiver cette adhérent ?')) {
-                        fetch(`http://localhost:9999/api/adherents/status/${id}/false`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
-                function enableParution(id) {
-                    if (confirm('Voulez-vous vraiment activer cette Parution ?')) {
-                        fetch(`http://localhost:9999/api/adherents/parution/${id}/true`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
-                function disableParution(id) {
-                    if (confirm('Voulez-vous vraiment désactiver cette Parution ?')) {
-                        fetch(`http://localhost:9999/api/adherents/parution/${id}/false`, {
-                            method: "PATCH",
-                            headers: {
-                                'Content-type': 'application/json'
-                            }
-                        })
-                        setTimeout(() => {
-                            document.location.reload();
-                        }, 500);
-                    }
-                }
+                </script>
+                <script src="js/index.js"></script>
+                <script src="js/api.js"></script>
 
-            </script>
-            <script src="js/index.js"></script>
-            <script src="js/api.js"></script>
-
-            </html>
+                </html>

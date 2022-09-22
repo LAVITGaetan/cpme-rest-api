@@ -45,7 +45,12 @@ exports.getAdherent = async (req, res) => {
                 'auth-token': token
             }
         })
-        res.render('pages/adherent/profil', { title: 'Profil adhérent', adherent: fetch.data })
+        let fetch_contacts = await axios.get(`${process.env.LOCAL_API}/contacts/adherent/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        res.render('pages/adherent/profil', { title: 'Profil adhérent', adherent: fetch.data, contacts: fetch_contacts.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);
@@ -65,6 +70,45 @@ exports.editAdherent = async (req, res) => {
             }
         })
         res.render('pages/adherent/edit', { title: 'Modifier un adhérent', adherent: fetch.data })
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
+    }
+}
+
+exports.addAdherentContact = async (req, res) => {
+    let token = req.cookies['token'] || '';
+    try {
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        res.render('pages/adherent/add-contact', { title: 'Ajouter un contact', adherent: fetch.data })
+    } catch (error) {   
+        res.status(500).send({ message: error.message })
+        console.log(error.message);
+    }
+}
+
+exports.editAdherentContact = async (req, res) => {
+    let token = req.cookies['token'] || '';
+    try {
+        let fetch = await axios.get(`${process.env.LOCAL_API}/adherents/${req.query.id}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+
+        console.log('contact id:' + req.query.contact);
+        let fetch_contact = await axios.get(`${process.env.LOCAL_API}/contacts/${req.query.contact}`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+
+
+        res.render('pages/adherent/edit-contact', { title: 'Modifier un contact', adherent: fetch.data, contact: fetch_contact.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);

@@ -17,7 +17,7 @@ body {
 }
 
 .bold {
-  font-weight: 700;
+  font-weight: 700!important;
 }
 
 .title {
@@ -105,6 +105,22 @@ body {
   width: 100%;
   margin-bottom: 1.1em;
   border-bottom: 3px solid #00c4cc20;
+  position: relative;
+  min-height: 110px;
+}
+
+.contact-delete {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.contact-edit {
+  position: absolute;
+  top: 64px;
+  right: 16px;
+  cursor: pointer;
 }
 
 /* Card */
@@ -1287,7 +1303,7 @@ body {
 
 /*modal*/
 
-.modal, #modal {
+.modal, #modal{
   position: fixed;
   width: 400px;
   border-top: 5px solid #00c4cc;
@@ -1303,7 +1319,7 @@ body {
   grid-row-gap: 0px;
 }
 
-.modal-title {
+.modal-title, #modal-title {
   text-align: center;
   font-weight: 600;
   font-size: 18px;

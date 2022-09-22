@@ -18,10 +18,6 @@ function showModalRepresentation(id, titre) {
     input.value = titre;
 }
 
-function closeModalRepresentation() {
-    let modal = document.getElementsByClassName('modal')[0];
-    modal.style.display = 'none';
-}
 
 function closeModal() {
     document.getElementsByClassName('modal')[0].style.display = 'none'

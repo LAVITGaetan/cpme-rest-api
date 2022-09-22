@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const adherentRoutes = require('./app/routes/adherent')
+const contactRoutes = require('./app/routes/contact')
 const mandatRoutes = require('./app/routes/mandat')
 const mandataireRoutes = require('./app/routes/mandataire')
 const representationRoutes = require('./app/routes/representation')
@@ -32,6 +33,7 @@ app.use(express.static('public'));
 
 // ROUTES API
 app.use('/api/adherents', adherentRoutes)
+app.use('/api/contacts', contactRoutes)
 app.use('/api/mandats', mandatRoutes)
 app.use('/api/mandataires', mandataireRoutes)
 app.use('/api/representations', representationRoutes)
@@ -51,6 +53,8 @@ app.get('/adherents', services.getAdherents)
 app.get('/profil-adherent', services.getAdherent)
 app.get('/add-adherent', services.addAdherent)
 app.get('/edit-adherent', services.editAdherent)
+app.get('/add-contact', services.addAdherentContact)
+app.get('/edit-contact', services.editAdherentContact)
 
 // ROUTES Mandats
 app.get('/mandats', services.getMandats)
