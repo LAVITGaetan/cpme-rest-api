@@ -275,7 +275,12 @@ exports.getSondage = async (req, res) => {
                 'auth-token': token
             }
         })
-        res.render('pages/sondage/profil', { title: 'Profil sondage', sondage: fetch_sondage.data, questions: fetch_questions })
+        let fetch_reponses = await axios.get(`${process.env.LOCAL_API}/sondages/${req.query.id}/reponses`, {
+            headers: {
+                'auth-token': token
+            }
+        })
+        res.render('pages/sondage/profil', { title: 'Profil sondage', sondage: fetch_sondage.data, questions: fetch_questions, reponses: fetch_reponses.data })
     } catch (error) {
         res.status(500).send({ message: error.message })
         console.log(error.message);

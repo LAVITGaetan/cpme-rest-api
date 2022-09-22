@@ -24,13 +24,13 @@
                         <div class="card-title js-nom">
                             <%= sondage.nom %>
                         </div>
-                        <div class="card-subtitle js-titre">
+                        <div class="card-subtitle">
                             Nombre de réponses
                         </div>
                         <a href="/profil-sondage?id=<%= sondage._id %>" class="no-decoration card-edit">
                             <img src="img/edit.png" width="12px" height="12px" alt="edit">
                         </a>
-                        <div class="card-delete" onclick="deleteSondage('<%= sondage._id %>')">
+                        <div class="card-delete" data-message="Sondage supprimé, cliquez sur le bouton pour revenir aux sondages" data-redirection="/sondages" data-ressource="sondages/<%= sondage._id %>" onclick="deleteRessource(this)">
                             <img src="img/delete.png" width="12px" height="12px" alt="delete">
                         </div>
                     </div>
@@ -38,6 +38,7 @@
             </div>
             </div>
             
+        <%- include('../includes/succes.ejs') %>
     </body>
     <script>
 
@@ -69,37 +70,26 @@
             }, 100);
         }
 
-        function changeFilter(id) {
-            document.getElementsByClassName('filter-selected')[0].classList.remove('filter-selected');
-            document.getElementsByClassName('filter-item')[id].classList.add('filter-selected');
-            searchSondage();
-        }
-
         function searchSondage() {
             let query = document.getElementById('search').value.toLowerCase();
             let item = document.getElementsByClassName('sondage');
+            result_count = 0;
             let length = item.length;
-            let filter = document.getElementsByClassName('filter-selected')[0].innerHTML.toLowerCase();
             for (let i = 0; i < length; i++) {
-                let entreprise = item[i].getElementsByClassName('js-entreprise')[0].innerHTML.toLowerCase();
-                let section = item[i].getElementsByClassName('js-section')[0].innerHTML.toLowerCase();
-                if (filter === "tous" || filter === section.replace(/\s/g, '')) {
-                    if (entreprise.includes(query)) {
+                let nom = item[i].getElementsByClassName('js-nom')[0].innerHTML.toLowerCase();
+                    if (nom.includes(query)) {
                         item[i].style.display = 'table-row';
                         console.log('item matched');
+                        result_count ++;
                     }
                     else {
                         item[i].style.display = 'none';
                         console.log('item hidden by query');
                     }
-                } else {
-                    item[i].style.display = 'none';
-                    console.log('item hidden by section');
-                }
-
             }
         }
     </script>
-    <script src="/js/index.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/api.js"></script>
 
     </html>

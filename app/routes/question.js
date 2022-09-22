@@ -57,7 +57,6 @@ router.patch('/:id', verify, async (req, res) => {
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
-    res.send({ message: req.params.id })
 })
 
 //  Delete question

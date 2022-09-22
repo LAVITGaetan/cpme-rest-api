@@ -87,7 +87,7 @@ function addItemToArray(label, type, order, id) {
         },
         type: type,
         order: order + 1,
-        form_id:''
+        form_id: ''
     }
     formArray.push(item);
 }
@@ -367,7 +367,7 @@ function destroyInput(id) {
     if (window.confirm('Supprimer cette question ?')) {
 
         let item = formArray.find(el => el.id === id)
-        formArray.filter(el => el.order > item.order).map(el => el.order -=1)
+        formArray.filter(el => el.order > item.order).map(el => el.order -= 1)
         var index = formArray.map(el => {
             return el.id;
         }).indexOf(id);
@@ -377,6 +377,39 @@ function destroyInput(id) {
         counter--;
         updateQuestionCount();
         updateQuestionOrder();
+    }
+}
+
+// Delete existingInput
+function destroyExistingInput(id) {
+    if (window.confirm('Supprimer cette question de manière définitive?')) {
+        try {
+            fetch(`http://localhost:9999/api/questions/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'auth-token': getCookie('token')
+                }
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    console.log(response);
+                    let item = formArray.find(el => el._id === id)
+                    let question_id = item.order;
+                    formArray.filter(el => el.order > item.order).map(el => el.order -= 1)
+                    var index = formArray.map(el => {
+                        return el.id;
+                    }).indexOf(id);
+                    formArray.splice(index, 1);
+                    let question = document.getElementById(`js-container${question_id}`);
+                    htmlContent.removeChild(question);
+                    counter--;
+                    updateQuestionCount();
+                    updateQuestionOrder();
+                })
+        } catch (error) {
+            console.log(error.message);
+        }
+ 
     }
 }
 
@@ -422,7 +455,6 @@ function slideDown(id) {
 }
 
 // Change description
-
 function updateDescription(id) {
     let container = document.getElementById(`js-container${id}`);
     container.getElementsByClassName('question-sub')[0].innerHTML = '';
@@ -502,3 +534,31 @@ document.getElementById('js-salaries').addEventListener('click', () => {
 document.getElementById('js-notation').addEventListener('click', () => {
     addQuestion('notation');
 })
+
+function fillArray(form_id) {
+    let questions = document.getElementsByClassName('editor-question');
+    formArray = [];
+    for (let i = 0; i < questions.length; i++) {
+        let label = questions[i].getAttribute('data-label');
+        let required = questions[i].getAttribute('data-required');
+        let set = questions[i].getAttribute('data-description');
+        let content = questions[i].getAttribute('data-content');
+        let type = questions[i].getAttribute('data-type');
+        let id = questions[i].getAttribute('data-id');
+        formArray.push({
+            id: i +1,
+            _id: id,
+            label: label,
+            required: required,
+            description: {
+                set: set,
+                content: content
+            },
+            type: type,
+            order: i + 1,
+            form_id: form_id,
+            old: 'old'
+        })
+
+    }
+}        
