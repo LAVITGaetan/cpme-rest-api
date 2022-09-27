@@ -19,7 +19,8 @@ const userRoutes = require('./app/routes/user')
 
 const cors = require('cors');
 app.use(cors({
-    origin: '*'
+    origin: '*',
+    credentials: true
 }));
 // middlewares
 app.use(express.json());

@@ -33,7 +33,7 @@ const upload = multer({
 router.get('/', verify, async (req, res) => {
     try {
         const adherents = await Adherent.find();
-        res.send(adherents)
+        res.status(200).send(adherents)
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
@@ -43,7 +43,7 @@ router.get('/', verify, async (req, res) => {
 router.get('/:id', verify, async (req, res) => {
     try {
         const adherent = await Adherent.findById(req.params.id)
-        res.send(adherent)
+        res.status(200).send(adherent)
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
