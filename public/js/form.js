@@ -130,6 +130,7 @@ function addItemtoHtml(label, type, order, id) {
     }
 }
 
+// Add question to DOM
 function generateQuestion(label, type, order, id) {
     createContainer(id)
     createCounter(order, id)
@@ -145,11 +146,15 @@ function generateQuestion(label, type, order, id) {
 // Create components
 
 function createContainer(id) {
+    // Define order
     let order = document.getElementsByClassName('question-counter').length + 1 || 0;
+    // Create element
     let newElement = document.createElement("DIV");
+    // Set attributes to element
     newElement.setAttribute("class", "editor-question");
     newElement.setAttribute("style", `order: ${order};`);
     newElement.setAttribute("id", `js-container${id}`);
+    // Add element to DOM
     htmlContent.appendChild(newElement);
 }
 
@@ -299,10 +304,12 @@ function createRequired(id) {
 }
 
 function createDelete(id) {
+    // Retrieve created container
     let container = document.getElementById(`js-container${id}`);
+    // Create elements
     let newImg = document.createElement('IMG');
     let newdelete = document.createElement('DIV');
-    container.appendChild(newdelete);
+    // Set attributes to elements
     newdelete.setAttribute("class", "question-delete");
     newdelete.setAttribute("name", id);
     newdelete.setAttribute("id", `delete${id}`);
@@ -310,6 +317,8 @@ function createDelete(id) {
     newImg.setAttribute("width", "32px");
     newImg.setAttribute("height", "32px");
     newImg.setAttribute("src", "img/chat.png");
+    // Add elements to DOM
+    container.appendChild(newdelete);
     container.getElementsByClassName('question-delete')[0].appendChild(newImg)
 }
 
@@ -365,16 +374,20 @@ function updateQuestionOrder() {
 // Delete input
 function destroyInput(id) {
     if (window.confirm('Supprimer cette question ?')) {
-
+        // Get item from array
         let item = formArray.find(el => el.id === id)
+        // Adjust other question order if required
         formArray.filter(el => el.order > item.order).map(el => el.order -= 1)
+        // Delete item from array
         var index = formArray.map(el => {
             return el.id;
         }).indexOf(id);
         formArray.splice(index, 1);
+        // Remove item from DOM
         let question = document.getElementById(`js-container${id}`);
         htmlContent.removeChild(question);
         counter--;
+        // Update DOM
         updateQuestionCount();
         updateQuestionOrder();
     }

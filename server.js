@@ -16,6 +16,11 @@ const questionRoutes = require('./app/routes/question')
 const reponseRoutes = require('./app/routes/reponse')
 const userRoutes = require('./app/routes/user')
 
+
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+}));
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
