@@ -38,69 +38,15 @@ router.get('/', verify, Controller.getMandataires)
 router.get('/:id', verify, Controller.getMandataire)
 
 // Add mandataire
-router.post('/', verify, upload.single('mandataireLogo'), async (req, res) => {
-    if (req.file) {
-        path = req.file.path.substring(7)
-    }
-    else {
-        path = req.body.logo || 'none'
-    }
-    const mandataire = new Mandataire({
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        description: req.body.description,
-        logo: path
-    });
-    try {
-        await mandataire.save();
-        res.send(mandataire)
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-})
+router.post('/', verify, upload.single('mandataireLogo'), Controller.addMandataire)
 
 // Update mandataire
-router.patch('/:id', verify, upload.single('mandataireLogo'), async (req, res) => {
-    if (req.file) {
-        path = req.file.path.substring(7)
-    }
-    else {
-        path = req.body.logo || 'none'
-    }
-    const mandataire = {
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        description: req.body.description,
-        logo: path
-    };
-    try {
-        const updatedMandataire = await Mandataire.findByIdAndUpdate(req.params.id, mandataire, { new: true });
-        res.send({ updatedMandataire })
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-    res.send({ message: req.params.id })
-})
+router.patch('/:id', verify, upload.single('mandataireLogo'), Controller.editMandataire)
 
 //  Delete mandataire
-router.delete('/:id', verify, async (req, res) => {
-    try {
-        await Mandataire.findByIdAndRemove(req.params.id)
-        res.status(200).send({ message: 'Mandataire supprimé' })
-    } catch (error) {
-        res.send({ message: error.message })
-    }
-})
+router.delete('/:id', verify, Controller.deleteMandataire)
 
-// Delete mandat and representations related
-router.delete('/:id/representations', async (req, res) => {
-    try {
-        await Mandataire.findByIdAndRemove(req.params.id)
-        await Representation.deleteMany({id_mandataire: req.params.id})
-        res.send({message: 'Mandataire et representations liées au mandataire supprimé'})
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-        console.log(error.message);
-    }
-})
+// Delete representation and mandats related
+router.delete('/:id/representations', Controller.deleteRepresentation)
+
 module.exports = router;
