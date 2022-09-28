@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router();
-const Mandat = require('../models/mandat');
-const Representation = require('../models/representation');
 const Controller = require('../controllers/mandat')
 const verify = require('./verifyToken')
+
 // MULTER Settings
 const multer = require('multer');
 const storage = multer.diskStorage({
