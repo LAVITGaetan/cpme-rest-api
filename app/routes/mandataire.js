@@ -35,14 +35,7 @@ const upload = multer({
 router.get('/', verify, Controller.getMandataires)
 
 // Retrieve one mandataire
-router.get('/:id', verify, async (req, res) => {
-    try {
-        const mandataire = await Mandataire.findById(req.params.id)
-        res.send(mandataire)
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-})
+router.get('/:id', verify, Controller.getMandataire)
 
 // Add mandataire
 router.post('/', verify, upload.single('mandataireLogo'), async (req, res) => {
