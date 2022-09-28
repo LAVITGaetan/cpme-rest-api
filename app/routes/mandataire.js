@@ -1,7 +1,5 @@
 const express = require('express')
 const router = express.Router();
-const Mandataire = require('../models/mandataire');
-const Representation = require('../models/representation');
 const verify = require('./verifyToken');
 const Controller = require('../controllers/mandataire')
 
