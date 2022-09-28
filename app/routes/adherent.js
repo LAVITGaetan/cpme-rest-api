@@ -109,7 +109,6 @@ router.patch('/:id', verify, upload.single('adherentLogo'), async (req, res) => 
     } catch (error) {
         res.status(500).send({ message: error.message })
     }
-    res.send({ message: req.params.id })
 })
 
 // Delete adhérent

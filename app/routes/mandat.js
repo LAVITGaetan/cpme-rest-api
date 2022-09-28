@@ -48,4 +48,5 @@ router.delete('/:id', verify, Controller.deleteMandat)
 
 // Delete mandat and representations related
 router.delete('/:id/representations', Controller.deleteRepresentation)
+
 module.exports = router;
