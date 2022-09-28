@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router();
 const Mandataire = require('../models/mandataire');
 const Representation = require('../models/representation');
-const verify = require('./verifyToken')
+const verify = require('./verifyToken');
+const Controller = require('../controllers/mandataire')
 
 // MULTER Settings
 const multer = require('multer');
@@ -31,14 +32,7 @@ const upload = multer({
 });
 
 // Retrieve all mandataires
-router.get('/', verify, async (req, res) => {
-    try {
-        const mandataires = await Mandataire.find();
-        res.send(mandataires)
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-})
+router.get('/', verify, Controller.getMandataires)
 
 // Retrieve one mandataire
 router.get('/:id', verify, async (req, res) => {

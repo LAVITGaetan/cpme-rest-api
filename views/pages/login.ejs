@@ -40,7 +40,10 @@
             }
             fetch('https://cpme-rest-api.herokuapp.com/api/users/login', {
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'withCredentials': 'true',
+                    'Access-Control-Allow-Origin': 'true',
+                    'Access-Control-Allow-Credentials': 'true'
                 },
                 method: "POST",
                 body: JSON.stringify(user)
@@ -51,9 +54,10 @@
                         console.log('Connexion refusée');
                         return;
                     }
+                    console.log(response);
                     let message = 'Connexion réussi, cliquez sur le bouton pour continuer';
-                        let redirecton = `/`;
-                        showModalSucces(message, redirecton)
+                    let redirecton = `/`;
+                    showModalSucces(message, redirecton)
                 })
         }
     </script>

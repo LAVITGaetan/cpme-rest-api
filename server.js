@@ -20,7 +20,8 @@ const userRoutes = require('./app/routes/user')
 const cors = require('cors');
 app.use(cors({
     origin: '*',
-    credentials: true
+    credentials: true,
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 // middlewares
 app.use(express.json());
@@ -90,7 +91,7 @@ mongoose.connect(process.env.MONGO_URI,
     }).catch(error => {
         console.log(`an error happened : ${error}`);
     })
-    
+
 // START SERVER    
 app.listen(PORT, () => {
     console.log(`Server running at : http://localhost:${PORT}`);
