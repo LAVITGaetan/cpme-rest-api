@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
         res.cookie("token", token, { maxAge: expirationSeconds * 1000 })
         res.header('auth-token', token).send({ token: token })
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).json(error)
     }
 
 })
