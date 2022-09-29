@@ -58,27 +58,28 @@ router.post('/', verify, async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
-    try {
-        // Check if email exist
-        const user = await User.findOne({ email: req.body.email })
-        if (!user) {
-            res.send({ message: 'Identifiant incorrect' })
-        }
+    if(req.body.email && req.body.identifiant) {
+// Check if email exist
+const user = await User.findOne({ email: req.body.email })
+if (!user) {
+    res.send({ message: 'Identifiant incorrect' })
+}
 
-        // Check if passwords match
-        const validPassword = await bcrypt.compare(req.body.identifiant, user.identifiant)
-        if (!validPassword) return res.send({ message: 'Mot de passe incorrect' })
+// Check if passwords match
+const validPassword = await bcrypt.compare(req.body.identifiant, user.identifiant)
+if (!validPassword) return res.send({ message: 'Mot de passe incorrect' })
 
-        // Set token
-        const secret_token = process.env.SECRET_TOKEN;
-        // 24h 
-        const expirationSeconds = 86400;
-        const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "24h" });
-        res.cookie("token", token, { maxAge: expirationSeconds * 1000 })
-        res.header('auth-token', token).send({ token: token })
-    } catch (error) {
-        res.status(500).json(error)
+// Set token
+const secret_token = process.env.SECRET_TOKEN;
+// 24h 
+const expirationSeconds = 86400;
+const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "24h" });
+res.cookie("token", token, { maxAge: expirationSeconds * 1000 })
+res.header('auth-token', token).send({ token: token })
     }
+      else {
+        res.send({ message: 'Email and password must be filled'})
+      }  
 
 })
 
