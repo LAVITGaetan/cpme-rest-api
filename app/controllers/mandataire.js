@@ -1,5 +1,6 @@
 const Mandataire = require('../models/mandataire')
 const Representation = require('../models/representation');
+const { body, validationResult } = require('express-validator');
 
 exports.getMandataires = async (req, res) => {
     try {
