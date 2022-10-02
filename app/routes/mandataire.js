@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router();
 const verify = require('./verifyToken');
 const Controller = require('../controllers/mandataire')
-const { body, validationResult } = require('express-validator');
+const Validate = require('./validate');
+const verifyRole = require('./verifyRole')
+const mandataireSchema = require('../validations/mandataire')
 
 // MULTER Settings
 const multer = require('multer');
@@ -37,19 +39,19 @@ router.get('/', verify, Controller.getMandataires)
 router.get('/:id', verify, Controller.getMandataire)
 
 // Add mandataire
-router.post('/', verify, upload.single('mandataireLogo'), body('prenom').isLength({ min: 5 }).trim(), function (req, res, next) {
-    console.log('hello');
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-    else {
-        next();
-    }
-}, Controller.addMandataire)
+router.post('/',
+    verify,
+    verifyRole,
+    upload.single('mandataireLogo'),
+    mandataireSchema,
+    Validate,
+    Controller.addMandataire)
 
 // Update mandataire
-router.patch('/:id', verify, upload.single('mandataireLogo'), Controller.editMandataire)
+router.patch('/:id', verify, upload.single('mandataireLogo'),
+    mandataireSchema,
+    Validate,
+    Controller.editMandataire)
 
 //  Delete mandataire
 router.delete('/:id', verify, Controller.deleteMandataire)

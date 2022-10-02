@@ -30,9 +30,8 @@ app.use(cookieParser())
 app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: 'secretvariable'
+    secret: 'secretvariable',
 }))
-
 // Set view engine
 app.set('view engine', 'ejs')
 // Static Files

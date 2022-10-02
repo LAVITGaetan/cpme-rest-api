@@ -1,13 +1,12 @@
 const Mandataire = require('../models/mandataire')
 const Representation = require('../models/representation');
-const { body, validationResult } = require('express-validator');
 
 exports.getMandataires = async (req, res) => {
     try {
         const mandataires = await Mandataire.find();
         res.send(mandataires)
     } catch (error) {
-        res.status(500).send({ message: error.message })
+        res.status(500).send({ message: 'Accès refusé' })
     }
 }
 

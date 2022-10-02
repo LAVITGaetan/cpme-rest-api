@@ -4,7 +4,13 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const verify = require('./verifyToken')
-
+const rateLimit = require('express-rate-limit')
+const limiter = rateLimit({
+	windowMs: 1 * 60 * 1000,
+	max: 10,
+	standardHeaders: true,
+	legacyHeaders: false,
+})
 // Get all users
 router.get('/', verify, async (req, res) => {
     let token = req.header('auth-token') || req.cookies('token');
@@ -57,7 +63,7 @@ router.post('/', verify, async (req, res) => {
 })
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login',limiter, async (req, res) => {
     if (req.body.email && req.body.identifiant) {
         // Check if email exist
         const user = await User.findOne({ email: req.body.email })
