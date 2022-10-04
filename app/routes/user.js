@@ -14,7 +14,6 @@ const limiter = rateLimit({
 // Get all users
 router.get('/', verify, async (req, res) => {
     let token = req.header('auth-token') || req.cookies('token');
-    console.log('here');
     try {
         const users = await User.find();
         res.header('auth-token', token).send(users)
@@ -63,7 +62,7 @@ router.post('/', verify, async (req, res) => {
 })
 
 // Login
-router.post('/login',limiter, async (req, res) => {
+router.post('/login', limiter, async (req, res) => {
     if (req.body.email && req.body.identifiant) {
         // Check if email exist
         const user = await User.findOne({ email: req.body.email })
@@ -80,7 +79,7 @@ router.post('/login',limiter, async (req, res) => {
         // 24h 
         const expirationSeconds = 86400;
         const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "24h" });
-        res.cookie("token", token, { maxAge: expirationSeconds * 1000 })
+        res.cookie("token", token, { maxAge: expirationSeconds * 1000, httpOnly: true, secure:true })
         res.header('auth-token', token).send({ token: token })
     }
     else {

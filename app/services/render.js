@@ -16,7 +16,7 @@ exports.index = async (req, res) => {
         })
         res.render('pages/accueil', { title: 'Accueil', adherents: fetch.data })
     } catch (error) {
-        res.status(500).send({ message: error.message })
+        res.status(500).send({ message: 'Accès refusé' })
         console.log(error.message);
     }
 }
