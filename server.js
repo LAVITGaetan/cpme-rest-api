@@ -19,7 +19,7 @@ const userRoutes = require('./app/routes/user')
 
 const cors = require('cors');
 app.use(cors({
-    origin: '*',
+    origin: ['http://localhost:1400', 'http://localhost:9999', 'https://cpme-rest-api.herokuapp.com'],
     credentials: true,
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));

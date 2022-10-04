@@ -79,8 +79,8 @@ router.post('/login', limiter, async (req, res) => {
         // 24h 
         const expirationSeconds = 86400;
         const token = jwt.sign({ _id: user._id, role: user.role }, secret_token, { expiresIn: "24h" });
-        res.cookie("token", token, { maxAge: expirationSeconds * 1000, httpOnly: true, secure:true })
-        res.header('auth-token', token).send({ token: token })
+        res.cookie("token", token, { maxAge: expirationSeconds * 1000, httpOnly: true, secure:true });
+        res.header('auth-token', token).send({ token: token });
     }
     else {
         res.send({ message: 'Email and password must be filled' })
